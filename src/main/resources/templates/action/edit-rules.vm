@@ -1,0 +1,59 @@
+<script>
+	function fnValidate(){
+		var ruleName = document.getElementById('ruleName');
+		var jqlrule = document.getElementById('jqlRule');
+		
+		if (ruleName.value.trim().length == 0){
+			alert("Rule Name cannot be blank");
+			return false;
+		}else if (jqlrule.value.trim().length == 0){
+			alert("JQL Rule cannot be blank");
+			return false;
+		}
+		else{
+			document.add-rule.submit();
+			return true;
+		}
+	}
+</script>
+
+<div>
+	<form id="edit-rule" name="edit-rule" action="$req.getContextPath()/secure/admin/JQLRuleConfigAction!updateRule.jspa">
+		<table class="jiraform maxWidth">
+			<tbody>
+				<tr class="titlerow">
+					<td colspan="2" class="jiraformheader">
+						<h3 class="formtitle">Edit Rule</h3>
+					</td>
+				</tr>
+				<tr class="descriptionrow">
+					<td colspan="2" class="jiraformheader">
+					<div class="desc-wrap">Edit JQL Rules</div>
+					</td>
+				</tr>
+				
+				<tr>
+					<td class="fieldLabelArea">Name :</td>
+					<td bgcolor="#ffffff" class="fieldValueArea">
+						<input type="text" id="ruleName" name="ruleName" value="$editRule.name" style="width:30%">
+					</td>
+				</tr>
+
+				<tr>
+					<td class="fieldLabelArea">JQL Rule :</td>
+					<td bgcolor="#ffffff" class="fieldValueArea">
+						<textarea class="textarea long-field" rows="5" cols="40" id="jqlRule" name="jqlRule" style="width:30%">$editRule.JQL</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td class="jiraformfooter">&nbsp;</td>
+					<td colspan="1">
+						<input type="submit" class="aui-button" name="Update" value="Update" id="update_submit" accesskey="s" title="Press Alt+s to submit form" class="spaced " onClick="fnValidate(this); return false;">
+					</td>
+				</tr>
+				
+			</tbody>
+		</table>		
+		<input type="hidden" name="ruleId" value="$editRule.ID"/>
+	</form>
+</div>

@@ -1,0 +1,59 @@
+##disable_html_escaping() TODO REENABLE
+#if ($!displayParameters.get('theme') && $!displayParameters.get('theme') == 'aui')
+    $!{auiparams.put("controlHeaderType", "checkbox")}
+    $!{auiparams.put("fieldsetClass", "group")}
+    $!{auiparams.put("noLabel", "true")}
+    #AUIformFieldsetHeader ($customField.name $fieldLayoutItem.required $displayParameters $auiparams)
+	#if ($canview.booleanValue())
+        #if ($value) #set ($selectedValues = $value) #end
+        #foreach ($option in $configs.options)
+            #if(!$option.disabled || $option.disabled == false || ($selectedValues && $selectedValues.contains($option.optionId.toString())))
+                #customControlHeader ($action $customField.id $customField.name $fieldLayoutItem.required $displayParameters $auiparams)
+                    #if ($selectedValues && $selectedValues.contains($option.optionId.toString())) #set ($checked = ' checked="checked" ') #else #set ($checked = "") #end
+                    <input${checked} class="checkbox" id="${customField.id}-${velocityCount}" name="${customField.id}" type="checkbox" value="$option.optionId" />
+                    <label for="${customField.id}-${velocityCount}">$cfValueEncoder.encodeForHtml($option.value)</label>
+                #customControlFooter ($action '${customField.id}_${velocityCount}' '' $displayParameters $auiparams)
+            #end
+        #end
+	#else
+		<i><span style="color:#ff0000;position:relative;left:140px;">Access Restricted</span></i>
+		
+		#if($value.size() == 0)
+			<input type="hidden" id="$customField.id" name="$customField.id" value="-1"/>
+		#else 
+			#foreach ($v in $value)
+				<input type="hidden" id="$customField.id" name="$customField.id" value="$v"/>
+			#end
+		#end
+	#end
+
+    #AUIformFieldsetFooter ($action $customField.id $fieldLayoutItem.fieldDescription $displayParameters $auiparams)
+#else
+    #customControlHeader ($action $customField.id $customField.name $fieldLayoutItem.required $displayParameters $auiparams)
+	#if ($canview.booleanValue())
+        #if ($value) #set ($selectedValues = $value) #end
+        #foreach ($option in $configs.options)
+            #if ($selectedValues && $selectedValues.contains($option.optionId.toString()))
+                #set ($checked = ' checked="checked" ')
+            #else
+                #set ($checked = "")
+            #end
+            #if(!$option.disabled || $option.disabled == false || $checked != "")
+                <input$!{checked} class="checkbox" id="${customField.id}-${velocityCount}" name="${customField.id}" type="checkbox" value="$option.optionId" />
+                <label for="${customField.id}-${velocityCount}">$cfValueEncoder.encodeForHtml($option.value)</label>
+                #if($velocityCount != $configs.options.size())<br />#end
+            #end
+        #end
+	#else
+		<i><span style="color:#ff0000;">Access Restricted</span></i>
+		
+		#if($value.size() == 0)
+			<input type="hidden" id="$customField.id" name="$customField.id" value="-1"/>
+		#else 
+			#foreach ($v in $value)
+				<input type="hidden" id="$customField.id" name="$customField.id" value="$v"/>
+			#end
+		#end
+	#end
+    #customControlFooter ($action $customField.id $fieldLayoutItem.fieldDescription $displayParameters $auiparams)
+#end

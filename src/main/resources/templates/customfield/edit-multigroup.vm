@@ -1,0 +1,22 @@
+##disable_html_escaping() TODO REENABLE
+$!{auiparams.put("controlHeaderClass", "aui-field-grouppicker")}
+#customControlHeader ($action $customField.id $customField.name $fieldLayoutItem.required $displayParameters $auiparams)
+
+    #set ($groupString = "")
+    #if ($value)
+        #foreach ($selectedValue in $value)
+            #if ($groupString == "")
+                #set ($groupString=$selectedValue)
+            #else
+                #set ($groupString="${groupString}, $selectedValue")
+            #end
+        #end
+    #end
+    #if ($canview.booleanValue())
+        #groupPicker ($action $customField.id $groupString $multiple $null "")
+    #else
+        <i><span style="color:#ff0000">Access Restricted</span></i><input type="hidden" id="$customField.id" name="$customField.id" value="$textutils.htmlEncode($groupString)"/>
+    #end
+
+#customControlFooter ($action $customField.id $fieldLayoutItem.fieldDescription $displayParameters $auiparams)
+$!{auiparams.clear()}

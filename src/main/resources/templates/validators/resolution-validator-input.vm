@@ -1,0 +1,39 @@
+<div class="aui-message">
+    <p class="title">
+        <span class="aui-icon icon-generic"></span>
+        <strong>$i18n.getText('resolution.validator.how.it.works.label')</strong>
+    </p>
+    <p>$i18n.getText('resolution.validator.how.it.works.description')</p>
+</div>
+<tr>
+    <td class="fieldLabelArea">
+        $i18n.getText('resolution.validator.resolution.label')
+    </td>
+    <td nowrap>
+        <select name="resolution" id="resolution">
+        #foreach ($res in $resolutions)
+            <option value="$res.id"
+            #if ($res.equals($resolution))
+                SELECTED
+            #end
+            >$res.name</option>
+        #end
+        </select>
+    </td>
+</tr>
+<tr>
+    <td class="fieldLabelArea">
+        $i18n.getText('resolution.validator.field.label')
+    </td>
+    <td nowrap>
+        <select name="field" id="field">
+        #foreach ($fieldObj in $fields)
+            <option value="$fieldObj.id"
+            #if ($field && $field.id.equals($fieldObj.id))
+                SELECTED
+            #end
+            >$fieldObj.name</option>
+        #end
+        </select>
+    </td>
+</tr>

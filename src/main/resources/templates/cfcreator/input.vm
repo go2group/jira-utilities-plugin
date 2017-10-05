@@ -1,0 +1,30 @@
+<html>
+	<head>	
+		<title>Custom Field Creator</title>
+		<meta name="decorator" content="admin" />
+	</head>
+	
+	<body>
+		<form name="process-data" action="$req.getContextPath()/secure/CFCreator!process.jspa" method="post" class="aui">
+			<table class="jiraform maxWidth">
+				<tr>
+					<td class="fieldLabelArea">Custom Field JSON Response:</td>
+					<td class="fieldValueArea">
+						<textarea rows="10" cols="100" id="cfJSON" name="cfJSON"></textarea>
+						<div class="description">
+							Please input the response from $SOURCE_JIRA_BASE_URL/rest/api/2/field and then click <strong>Process JSON</strong><br/>
+							E.g. http://jira.example.com/rest/api/2/field
+						</div>
+					</td>
+				</tr>
+			</table>
+			
+			<div class="buttons-container form-footer">
+				<div class="buttons">
+					<input accesskey="s" class="button" id="submit" name="Add" title="Press Alt+s to submit this form" type="submit" value="Process JSON">
+					<a accesskey="`" class="cancel" href="CFCreator.jspa" id="cancel" title="Press Alt+` to cancel">Cancel</a>
+				</div>
+			</div>
+		</form>
+	<body>
+</html>

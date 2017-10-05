@@ -1,0 +1,18 @@
+$!{auiparams.put("controlHeaderClass", "aui-field-listoptionspicker")}
+#customControlHeader ($action $customField.id $customField.name $fieldLayoutItem.required $displayParameters $auiparams)
+#if ($value)
+    #set ($selectedValues = $value)
+#end
+<div class="ajs-multi-select-placeholder textarea long-field"></div>
+<select class="multi-select long-field hidden" id="$customField.id" multiple="multiple" name="$customField.id" size="#minSelectSize ($configs.options 1 6)">
+    #foreach ($option in $configs.options)
+        #if(!$option.disabled || $option.disabled == false || ($selectedValues && $selectedValues.contains($option.optionId.toString())))
+            <option#if ($selectedValues && $selectedValues.contains($option.optionId.toString())) selected="selected"#end value="$option.optionId">
+                $option.value
+            </option>
+        #end
+    #end
+</select>
+<div class="description">${i18n.getText('generic.picker.static.desc')}</div>
+#customControlFooter ($action $customField.id $fieldLayoutItem.fieldDescription $displayParameters $auiparams)
+${auiparams.clear()}

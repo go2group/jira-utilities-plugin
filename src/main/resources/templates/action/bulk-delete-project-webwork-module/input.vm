@@ -1,0 +1,45 @@
+<html>
+<head>
+    <meta name="decorator" content="atl.admin">
+    <title>$i18n.getText("bulk.delete.projects-heading")</title>
+</head>
+<body>
+<div class="aui-message error">
+    <p class="title">
+        <span class="aui-icon icon-error"></span>
+        <strong>$i18n.getText("g2g.plugin.common.warning")</strong>
+    </p>
+    <p>$i18n.getText("bulk.delete.projects.confirm-description")</p>
+</div>
+<form class="aui" method="POST" action="BulkDeleteProject!execute.jspa">
+    #if($projects && $projects.size() > 0)
+        <fieldset>
+            <div class="field-group">
+                <label for="selectedProjects">$i18n.getText("bulk.delete.projects.project-label")</label>
+                <select class="multi-select" size="4" multiple="multiple" id="selectedProjects" name="selectedProjects">
+                    #foreach($project in $projects)
+                        <option value="$project.getKey()">$project.getName() ($project.getKey())</option>
+                    #end
+                </select>
+                <div class="description">$i18n.getText("bulk.delete.projects.project-description")</div>
+            </div>
+        </fieldset>
+
+        <div class="buttons-container">
+            <div class="buttons">
+                <input class="button submit" type="submit" value="$i18n.getText('g2g.plugin.common.submit')" id="d-save-btn1">
+                <a class="cancel" href="${baseurl}/plugins/servlet/upm/marketplace">$i18n.getText('g2g.plugin.common.cancel')</a>
+            </div>
+        </div>
+    #else
+        <div class="aui-message warning">
+            <p class="title">
+                <strong>$i18n.getText("bulk.delete.projects.no.project-label")</strong>
+            </p>
+            <p>$i18n.getText("bulk.delete.projects.no.project-description")</p>
+        </div>
+    #end
+</form>
+</body>
+</html>
+

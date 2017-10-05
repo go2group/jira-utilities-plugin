@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>$i18n.getText('common.words.configure') $action.getCustomField().getName()</title>
+  </head>
+
+  <body>
+
+    <h2>$i18n.getText('common.words.configure') $action.getCustomField().getName()</h2>
+    
+    <div class="aui-message">
+        <p>Please select an issue status</p>
+    </div>
+
+    <form action="TimeInStatusConfigureAction.jspa" method="post" class="aui">
+      <fieldset>
+        <div class="field-group">
+            <label for="status">Status<span class="aui-icon icon-required"> required</span></label>
+            <select name="status">
+                #set ($statusOptions = $action.getStatuses())
+                #foreach ($statusOption in $statusOptions)
+                    #set ($id = $statusOption.getId())
+                        <option value="$id" #if ($id == $status) selected #end>$statusOption.getName()</option>
+                #end
+            </select>
+        </div>
+
+
+      <input type="submit"
+             name="saveButton"
+             value="$i18n.getText('common.words.save')"
+             accesskey="S"
+             title="Press Ctrl+S to submit form"
+             class="aui-button"/>
+      <a href="$returnUrl">$i18n.getText('g2g.plugin.common.cancel')</a>
+
+      <input type="hidden" name="fieldConfigId" value="$fieldConfigId"> ## Used by the parent class AbstractEditConfigurationItemAction
+      <input type="hidden" name="returnUrl" id="returnUrl" value="$returnUrl"/>
+      </fieldset>
+    </form>
+
+  </body>
+</html>

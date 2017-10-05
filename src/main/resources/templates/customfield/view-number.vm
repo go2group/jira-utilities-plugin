@@ -1,0 +1,8 @@
+##disable_html_escaping() TODO REENABLE
+#if ($canview.booleanValue())
+	#if ($value)
+		$!numberTool.format($value)
+	#end
+#else
+	<i><span style="color:#ff0000">Access Restricted</span></i>
+#end

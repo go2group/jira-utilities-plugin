@@ -1,0 +1,25 @@
+<table class="aui">
+    <thead>
+        <th>Task</th><th>Assignee</th><th>Sign-Off</th>
+    </thead>
+    <tbody>
+    #foreach ($approval in $approvals)
+        #if ($approval.get("approver").length() > 0)
+            <tr>
+               <td>$approval.get("name")</td>
+               <td>$approval.get("approver")</td>
+               <td>
+                #foreach ($line in $approval.get("times"))
+                    #if ($line.contains("Denied"))
+                        <span style="color:red">$line</span><br>
+                    #else
+                        $line<br>
+                    #end
+                #end
+               </td>
+            </tr>
+        #end
+    #end
+    </tbody>
+</table>
+#end

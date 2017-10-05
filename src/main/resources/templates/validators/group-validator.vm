@@ -1,0 +1,50 @@
+<tr bgcolor=ffffff>
+	<td align="right" valign="top" bgcolor="#fffff0">
+		<span class="label">$i18n.getText('group.validator.user.field')</span>
+	</td>
+    <td bgcolor="ffffff" nowrap>
+		<select class="select" id="selecteduserfield" name="selecteduserfield">
+			#foreach($field in $userjirafield.keySet())
+			<option value="$field" #if ($field == $selecteduserfield) selected="selected" #end>$userjirafield.get($field)</option>
+			#end
+
+			#foreach($field in $usercustomfield)
+			<option value="$field.id" #if ($field.id == $selecteduserfield) selected="selected" #end>$field.name</option>
+			#end
+		</select>
+    </td>
+</tr>
+<tr bgcolor="#ffffff">
+    <td align="right" valign="top" bgcolor="#fffff0">
+        <span class="label">$i18n.getText('group.validator.group.field')</span>
+    </td>
+    <td bgcolor="#ffffff" nowrap>
+        <select name="group" id="group">
+        #foreach ($gr in $groups)
+        	<option value="$gr.name"
+            #if ($gr.name.equals($group))
+                SELECTED
+            #end
+            >$gr.name</option>
+        #end
+        </select>
+        <br><font size="1">Select the Group you'd like to verify if the user belongs to</font>
+    </td>
+</tr>
+<tr bgcolor="#ffffff">
+    <td align="right" valign="top" bgcolor="#fffff0">
+        <span class="label">$i18n.getText('group.validator.custom.field')</span>
+    </td>
+    <td bgcolor="#ffffff" nowrap>
+        <select name="field" id="field" multiple size="10">
+        #foreach ($fd in $fields)
+        	<option value="$fd"
+            #if ($field.contains($fd))
+                SELECTED
+            #end
+            >$jiraSystemFieldName.getSystemFieldName($fd)</option>
+        #end
+        </select>
+        <br><font size="1">Select the field you'd like to check if it is empty</font>
+    </td>
+</tr>

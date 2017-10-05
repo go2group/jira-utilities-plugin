@@ -1,0 +1,31 @@
+<p>Enter one approval per line.  Each line has 3 parts separated by pipe delimiters "|".
+<ul>
+<li>The first part of the line will be the label used for the Approval and can be any text.</li>
+<li>The second part is the status for the step in the workflow that corresponds to this approval.</li>
+<li>The last part is the name of the custom field that contains the approver.</li>
+</ul>
+</p>
+<p>
+The approver custom field should be a User Picker field.
+</p>
+<p>
+(Example: QA Approval | Pending Approval | QA Approver)
+</p>
+
+<form class="aui" name="approvals-config-form" id="approvals-config-form" method="post" action="${req.contextPath}/secure/admin/ApprovalsConfigureAction.jspa">
+    <fieldset>
+    <input type="hidden" name="fieldConfigId" value="$fieldConfigId">
+    <input type="hidden" name="returnUrl" id="returnUrl" value="$returnUrl"/>
+    <div class="field-group">
+        <label for="approvalFieldNames">Enter text</label>
+        <textarea class="textarea" name="approvalFieldNames">$!approvalFieldNames</textarea>
+        <div class="description"></div>
+    </div>
+    </fieldset>
+    <div class="buttons-container">
+        <div class="buttons">
+            <input class="aui-button" type="submit" value="Save" name="saveButton" id="saveButton">
+            <a class="cancel" href="$returnUrl">Cancel</a>
+        </div>
+    </div>
+</form>

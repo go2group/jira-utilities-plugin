@@ -1,0 +1,82 @@
+<html>
+<head>
+    <title>$i18n.getText('project.level.attachments.heading')</title>
+    <meta name="decorator" content="atl.general"/>
+</head>
+<body>
+    <header class="aui-page-header">
+        <div class="aui-page-header-inner">
+            <div class="aui-page-header-image">
+                <span class="aui-avatar aui-avatar-large aui-avatar-project">
+                    <span class="aui-avatar-inner">
+                        <img src="$avatarService.getProjectAvatarAbsoluteURL($project, $Avatar.Size.SMALL)" />
+                    </span>
+                </span>
+            </div>
+            <div class="aui-page-header-main project-details">
+                <h1>$i18n.getText('project.level.attachments.heading')</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="aui-page-panel">
+    <div class="aui-page-panel-inner">
+
+    <div class="aui-page-panel-nav">
+        <ul class="vertical tabs">
+            <li><a href="$baseUrl/browse/$project.getKey()" class="browse-tab">$i18n.getText('project.level.attachments.view.project.label')</a></li>
+        </ul>
+    </div>
+
+    <section class="aui-page-panel-content">
+
+    <header class="aui-page-header">
+        <div class="aui-page-header-inner">
+            <div class="aui-page-header-main">
+                <h1>$i18n.getText('project.level.attachments.upload.heading')</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="tabpanel-modules">
+    #if ($hasErrorMessages)
+    <div class="aui-message error">
+        <p class="title">
+            <span class="aui-icon icon-error"></span>
+            <strong>$i18n.getText("g2g.plugin.common.error")</strong>
+        </p>
+        <ul>
+            <li>$message</li>
+        </ul>
+    </div>
+    #end
+
+    <form class="aui" method="POST" action="$baseUrl/plugins/servlet/uploadProjectAttachments?project=$project.getKey()" enctype="multipart/form-data">
+        <fieldset>
+            <div class="field-group">
+                <label for="file">$i18n.getText('project.level.attachments.file.field')</label>
+                <input type="file" name="file" size="50" />
+            </div>
+            <div class="field-group">
+                 <label for="file">Comments</label>
+                 <textarea name="comments" id="comments" class="textarea" rows="5" cols="20"></textarea>
+                 <div class="description">$i18n.getText('project.level.attachments.comments.field')</div>
+            </div>
+        </fieldset>
+
+        <div class="buttons-container">
+            <div class="buttons">
+                <input class="button submit" type="submit" value="$i18n.getText('g2g.plugin.common.submit')" id="comment-save-button">
+                <a class="cancel" href="$baseUrl/browse/$project.getKey()">$i18n.getText('g2g.plugin.common.cancel')</a>
+            </div>
+         </div>
+    </form>
+
+    </div>
+
+    </section>
+
+    </div>
+    </div>
+</body>
+</html>

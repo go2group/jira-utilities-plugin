@@ -1,0 +1,32 @@
+<tr>
+	<td>
+		<form name="groupconfigform" action="ConfigureMultiUPInGroup.jspa">
+		<table style="width='100%';padding:15px;margin-left:auto;margin-right:auto">
+			<tr>
+				<td>
+					<span><b>Group Names : </b></span>
+				</td>
+				<td>
+					<input type="text" name="configGroups" size="40" value="$!configGroups"/>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td><span class="description">Enter the group names seperated by comma</span></td>
+			</tr>
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+					<input class="aui-button" type="submit" name="Update" value="Update"/>
+					<a href="$returnUrl" class="aui-button">Done</a>
+				</td>
+			</tr>
+		</table>
+		<input type="hidden" name="returnUrl" value="$returnUrl"/>
+		<input type="hidden" name="customFieldId" value="$customFieldId"/>
+		<input type="hidden" name="fieldConfigId" value="$fieldConfigId"/>
+		<input type="hidden" name="fieldConfigSchemeId" value="$fieldConfigSchemeId"/>
+		</form>
+	</td>
+</tr>

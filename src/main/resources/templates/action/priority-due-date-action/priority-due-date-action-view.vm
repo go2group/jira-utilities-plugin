@@ -1,0 +1,15 @@
+<html>
+<head>
+    <meta name="decorator" content="atl.admin">
+    <title>$i18n.getText('project-due-date.heading')</title>
+</head>
+<body>
+<div class="aui-message success">
+    <p class="title">
+        <span class="aui-icon icon-success"></span>
+        <strong>$i18n.getText("g2g.plugin.common.success")</strong>
+    </p>
+    <p>Click <a href="$baseurl/secure/admin/PriorityDueDate!default.jspa">here</a> to go back.</p>
+</div>
+</body>
+</html>success

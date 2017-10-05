@@ -1,0 +1,8 @@
+##disable_html_escaping() TODO REENABLE
+#customControlHeader ($action $customField.id $customField.name $fieldLayoutItem.required $displayParameters $auiparams)
+#if ($canview.booleanValue())
+	<input class="text long-field" id="$customField.id" name="$customField.id" type="text" value="$textutils.htmlEncode($!value)" />
+#else
+<i><span style="color:#ff0000">Access Restricted</span></i><input type="hidden" id="$customField.id" name="$customField.id" value="$textutils.htmlEncode($!value)"/>
+#end
+#customControlFooter ($action $customField.id $fieldLayoutItem.fieldDescription $displayParameters $auiparams)

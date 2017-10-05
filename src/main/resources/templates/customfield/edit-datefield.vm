@@ -1,0 +1,31 @@
+$!{auiparams.put("controlHeaderClass", "aui-field-datepicker")}
+#customControlHeader ($action $customField.id $customField.name $fieldLayoutItem.required $displayParameters $auiparams)
+
+    #if ($canview.booleanValue())
+	    #if ($displayParameters.defaultScreen)
+	        <input class="text medium-field datepicker-input" id="$customField.id" name="$customField.id" type="text" value="$!value" />
+	        <a href="#" id="${customField.id}-trigger" title="$i18n.getText('date.picker.select.date')">
+	            <span class="aui-icon icon-date">$i18n.getText('date.picker.select.date')</span>
+	        </a>
+	        #datePopup(${customField.id} "${customField.id}-trigger" $dateTimeFormat $dateFormat $timeFormat $dateTimePicker $currentMillis $currentCalendar)
+	        <div class="checkbox field-default">
+	            #if($dateTimePicker)
+	                #set ($labelText = $i18n.getText('date.picker.config.default.datetime'))
+	            #else
+	                #set ($labelText = $i18n.getText('date.picker.config.default.date'))
+	            #end
+	            <input#if ($customField.customFieldType.isUseNow($config)) checked="checked"#end class="checkbox" id="useCurrentDate" name="useCurrentDate" type="checkbox" value="true" />
+	            <label for="useCurrentDate">${labelText}</label>
+	        </div>
+	    #else
+	        <input class="text medium-field datepicker-input" id="$customField.id" name="$customField.id" type="text" value="$!value" />
+	        <a href="#" id="${customField.id}-trigger" title="$i18n.getText('date.picker.select.date')">
+	            <span class="aui-icon icon-date">$i18n.getText('date.picker.select.date')</span>
+	        </a>
+	        #datePopup(${customField.id} "${customField.id}-trigger" $dateTimeFormat $dateFormat $timeFormat $dateTimePicker $currentMillis $currentCalendar)
+	    #end
+    #else
+        <i><span style="color:#ff0000">Access Restricted</span></i><input type="hidden" id="$customField.id" name="$customField.id" value="$textutils.htmlEncode($!value)"/>
+    #end
+#customControlFooter ($action $customField.id $fieldLayoutItem.fieldDescription $displayParameters $auiparams)
+$!{auiparams.clear()}

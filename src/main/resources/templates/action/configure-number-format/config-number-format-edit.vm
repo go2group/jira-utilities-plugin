@@ -1,0 +1,65 @@
+<html>
+<head>
+    <meta name="decorator" content="atl.admin">
+    <title>$i18n.getText("configure.number.format-heading")</title>
+</head>
+<body>
+#if ($hasErrorMessages)
+<div class="aui-message error">
+    <p class="title">
+        <span class="aui-icon icon-error"></span>
+        <strong>$i18n.getText("g2g.plugin.common.error")</strong>
+    </p>
+    <ul>
+        #foreach( $message in $errorMessages )
+        <li>$message</li>
+        #end
+    </ul>
+</div>
+#end
+<table>
+    <tr>
+        <td>
+            <form name="configure-number-format-form" action="configureNumberFormatCustomField!config.jspa" class="aui">
+                <fieldset>
+                    <div class="field-group">
+                        <label for="type">$i18n.getText('configure.number.format.number.type-label')</label>
+                        <select class="select" id="type" name="type">
+                            <option value="WHOLE" #if($entity && $entity.getType()=="WHOLE") selected=selected #end>$i18n.getText('')Whole number</option>
+                            <option value="DECIMAL" #if($entity && $entity.getType()=="DECIMAL") selected=selected #end>$i18n.getText('')Decimal</option>
+                            <option value="RANGE" #if($entity && $entity.getType()=="RANGE") selected=selected #end>$i18n.getText('')Range</option>
+                        </select>
+                        <div class="description">$i18n.getText('configure.number.format.number.type-description')</div>
+                    </div>
+                    <div class="field-group">
+                        <label for="format">$i18n.getText('configure.number.format.decimal-label')</label>
+                        <input class="text" name="format" id="format" #if($entity && $entity.getFormat()) value=$entity.getFormat() #end />
+                        <div class="description">$i18n.getText('configure.number.format.decimal-description') <a target="_blank" href="http://docs.oracle.com/javase/7/docs/api/java/text/DecimalFormat.html">Decimal formats</a></div>
+                    </div>
+                    <div class="field-group">
+                        <label for="lowerLimit">$i18n.getText('configure.number.format.lower.limit-label')</label>
+                        <input class="text" name="lowerLimit" id="lowerLimit" #if($entity && $entity.getLowLimit()) value=$entity.getLowLimit() #end />
+                        <div class="description">$i18n.getText('configure.number.format.lower.limit-description')</div>
+                    </div>
+                    <div class="field-group">
+                        <label for="higherLimit">$i18n.getText('configure.number.format.higher.limit-label')</label>
+                        <input class="text" name="higherLimit" id="higherLimit" #if($entity && $entity.getHighLimit()) value=$entity.getHighLimit() #end />
+                        <div class="description">$i18n.getText('configure.number.format.higher.limit-description')</div>
+                    </div>
+                </fieldset>
+                <div class="buttons-container">
+                    <div class="buttons">
+                        <input class="button submit" type="submit" name="submit" value="$i18n.getText('g2g.plugin.common.submit')"/>
+                        <a class="cancel" href="$returnUrl">$i18n.getText('g2g.plugin.common.cancel')</a>
+                    </div>
+                </div>
+                <input type="hidden" name="returnUrl" value="$returnUrl"/>
+                <input type="hidden" name="customFieldId" value="$customFieldId"/>
+                <input type="hidden" name="fieldConfigId" value="$fieldConfigId"/>
+                <input type="hidden" name="fieldConfigSchemeId" value="$fieldConfigSchemeId"/>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

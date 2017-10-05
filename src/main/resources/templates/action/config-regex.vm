@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>$i18n.getText("configure.regular.expression-heading")</title>
+    </head>
+<body>
+<table>
+    <tr>
+        <td>
+            <form name="keyconfigform" action="configureRegexCustomField!config.jspa" class="aui">
+                <fieldset>
+                    <div class="field-group">
+                        <label>$i18n.getText('configure.regular.expression-label')</label>
+                        <textarea name="configRegex" class="textarea" rows="6" cols="50">#if($configRegex)$configRegex#end</textarea>
+                    </div>
+                </fieldset>
+                <div class="buttons-container">
+                    <div class="buttons">
+                        <input class="button submit" type="submit" name="submit" value="$i18n.getText('g2g.plugin.common.submit')"/>
+                        <a class="cancel" href="$returnUrl">$i18n.getText('g2g.plugin.common.cancel')</a>
+                    </div>
+                </div>
+                <input type="hidden" name="returnUrl" value="$returnUrl"/>
+                <input type="hidden" name="customFieldId" value="$customFieldId"/>
+                <input type="hidden" name="fieldConfigId" value="$fieldConfigId"/>
+                <input type="hidden" name="fieldConfigSchemeId" value="$fieldConfigSchemeId"/>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

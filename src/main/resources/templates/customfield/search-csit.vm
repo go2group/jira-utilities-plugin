@@ -1,0 +1,9 @@
+$!{auiparams.put("controlHeaderClass", "aui-field-text")}
+#searcherEditHeader (${customField.id} ${customField.name})
+	<span>Level 1 : </span><input type="text" id="type1-searcher-$customField.id" #if ($configs.styles.style) style="$configs.styles.style"#end value="$textutils.htmlEncode($!option1value)" onBlur="this.value = this.value.replace(/^\s+|\s+$/g, ''); if(this.value == '') this.value='%'; document.getElementById('searcher-$customField.id').value = this.value + ';' + document.getElementById('type2-searcher-$customField.id').value; if (document.getElementById('searcher-$customField.id').value.replace(/^\s+|\s+$/g, '') == '%;') document.getElementById('searcher-$customField.id').value = '';"/>
+	<span>  Level 2 : </span><input type="text" id="type2-searcher-$customField.id" #if ($configs.styles.style) style="$configs.styles.style"#end value="$textutils.htmlEncode($!option2value)" onBlur="document.getElementById('searcher-$customField.id').value =  document.getElementById('type1-searcher-$customField.id').value + ';' + this.value;  if (document.getElementById('searcher-$customField.id').value.replace(/^\s+|\s+$/g, '') == '%;') document.getElementById('searcher-$customField.id').value = '';"/>
+	
+    <input class="text" id="searcher-$customField.id" name="$customField.id" type="hidden" value="$textutils.htmlEncode($!value)" />
+#searcherEditFooter (${customField.id} ${customField.descriptionProperty.viewHtml})
+$!{auiparams.clear()}
+

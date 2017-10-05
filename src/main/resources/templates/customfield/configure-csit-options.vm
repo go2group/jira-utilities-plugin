@@ -1,0 +1,39 @@
+<div>
+	<table class="jiraform  maxWidth">
+		<tbody>
+			<tr>
+				<td class="jiraformheader">
+					<h3 class="formtitle">Configure Options</h3>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<br>
+	<table align="center" bgcolor="#bbbbbb" border="0" cellpadding="0" cellspacing="0" width="60%" align="left">
+		<tbody>
+			<tr><td>
+				<table border="0" cellpadding="3" cellspacing="1" width="100%">
+					<thead>
+						<tr bgcolor="#F0F0F0">
+							<th class="colHeaderLink"><b>S.No.</b></th>
+							<th class="colHeaderLink"><b>Issuetype</b></th>
+							<th class="colHeaderLink"><b>Actions</b></th>
+						</tr>
+					</thead>
+					
+					<tbody>
+						#set ($counter = 0)
+						#foreach ($issuetype in $issuetypes)
+						#set ($counter = $counter + 1)		
+							<tr #if($counter % 2 == 0) bgcolor="#fffff0" #else bgcolor="#ffffff" #end>
+								<td>${counter}</td>
+								<td>$issuetype.name</td>
+								<td><a href="$req.getContextPath()/secure/admin/ConfigureCSIT!viewOptLvl1.jspa?customFieldId=$customFieldId&issuetype=$issuetype.id">Configure</a></td>
+							</tr>
+						#end
+					</tbody>
+				</table>
+			</td></tr>
+		</tbody>
+	</table>
+</div>

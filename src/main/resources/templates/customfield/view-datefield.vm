@@ -1,0 +1,11 @@
+    #if ($canview.booleanValue())
+	    #if ($value)
+	        #if ($customField.customFieldType.isUseNow($value))
+	            Current date will be used
+	        #else
+	            <span title="$dateFieldFormat.format($value)"><time datetime="$iso8601Formatter.format($value)">$dateFieldFormat.format($value)</time></span>
+	        #end
+	    #end
+    #else
+	    <i><span style="color:#ff0000">Access Restricted</span></i>
+    #end

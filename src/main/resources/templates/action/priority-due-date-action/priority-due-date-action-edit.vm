@@ -1,0 +1,92 @@
+<html>
+<head>
+    <meta name="decorator" content="atl.admin">
+    <title>$i18n.getText('project-due-date.heading')</title>
+</head>
+<body>
+<h1>$i18n.getText('project-due-date.heading')</h1>
+#if ($result && $result == "added")
+    <div class="aui-message success">
+        <p class="title">
+            <span class="aui-icon icon-success"></span>
+            <strong>$i18n.getText("g2g.plugin.common.success")</strong>
+        </p>
+        <p>Saved successfully.</p>
+    </div>
+#end
+#if ($result && $result == "deleted")
+<div class="aui-message success">
+    <p class="title">
+        <span class="aui-icon icon-success"></span>
+        <strong>$i18n.getText("g2g.plugin.common.success")</strong>
+    </p>
+    <p>Deleted successfully.</p>
+</div>
+#end
+#if ($hasErrorMessages)
+<div class="aui-message error">
+    <p class="title">
+        <span class="aui-icon icon-error"></span>
+        <strong>$i18n.getText("g2g.plugin.common.error")</strong>
+    </p>
+    <ul>
+        #foreach( $message in $errorMessages )
+        <li>$message</li>
+        #end
+    </ul>
+</div>
+#end
+<form class="aui" method="POST" action="PriorityDueDate!execute.jspa">
+    <fieldset>
+        <div class="field-group">
+            <label for="priority">$i18n.getText('project-due-date.priority-label')</label>
+            <select name="priority" id="priority" class="select">
+                #foreach($entry in $priorities)
+                <option value="$entry.getName()">$entry.getName()</option>
+                #end
+            </select>
+            <div class="description">$i18n.getText('project-due-date.priority-description')</div>
+        </div>
+        <div class="field-group">
+            <label for="days">$i18n.getText('project-due-date.days-label')</label>
+            <input class="text" type="text" name="days" id="days" />
+            <div class="description">$i18n.getText('project-due-date.days-description')</div>
+        </div>
+    </fieldset>
+
+    <div class="buttons-container">
+        <div class="buttons">
+            <input class="button submit" type="submit" value="$i18n.getText('g2g.plugin.common.submit')" id="d-save-btn1">
+            <a class="cancel" href="${baseurl}/plugins/servlet/upm/marketplace">$i18n.getText('g2g.plugin.common.cancel')</a>
+        </div>
+    </div>
+</form>
+<hr />
+<h4>Configured mapping</h4>
+#if($mapping.size() == 0)
+    No mapping found.
+#else
+    <table class="aui">
+        <thead>
+            <th>$i18n.getText('project-due-date.table.first')</th>
+            <th>$i18n.getText('project-due-date.table.second')</th>
+            <th>$i18n.getText('project-due-date.table.third')</th>
+        </thead>
+        <tbody>
+            #foreach($entry in $mapping)
+                <tr>
+                    <td>$entry.getPriorityName()</td>
+                    <td>$entry.getDays()</td>
+                    <td>
+                        <form method="POST" action="PriorityDueDate!delete.jspa">
+                            <input type="hidden" id="priorityToDelete" name="priorityToDelete" value="$entry.getPriorityName()" />
+                            <input class="button submit" type="submit" value="$i18n.getText('g2g.plugin.common.delete')">
+                        </form>
+                    </td>
+                </tr>
+            #end
+        </tbody>
+    </table>
+#end
+</body>
+</html>

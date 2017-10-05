@@ -1,0 +1,10 @@
+##disable_html_escaping() TODO REENABLE
+#if ($canview.booleanValue())
+	#if($renderedValue)
+	<customfieldvalue>$xmlutils.escape($renderedValue)</customfieldvalue>
+	#elseif ($value)
+	<customfieldvalue><![CDATA[$xmlutils.escapeForCdata($value.toString())]]></customfieldvalue>
+	#end
+#else
+	<customfieldvalue>Access Restricted</customfieldvalue>
+#end

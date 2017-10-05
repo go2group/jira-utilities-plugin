@@ -1,0 +1,6 @@
+#set($i = 0)
+#foreach($value in $values)
+    #set($paintRule=$paintRules.get($i))
+    #parse("/templates/net/customware/fields/view-trafficlight.vm")
+    #set($i = $i + 1)
+#end

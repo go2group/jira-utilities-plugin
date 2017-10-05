@@ -1,0 +1,27 @@
+$!{auiparams.put("controlHeaderClass", "aui-field-cascadingselect")}
+#customControlHeader ($action $customField.id $customField.name $fieldLayoutItem.required $displayParameters $auiparams)
+	<select class="select cascadingselect-parent" id="st_${customField.id}" name="st_${customField.id}" onChange="if(this.options[this.selectedIndex].value == '') document.getElementById('$customField.id').value = ''; else document.getElementById('$customField.id').value = this.options[this.selectedIndex].value + ' ;';">
+        <option class="default-option" value="">$i18n.getText("common.words.pleaseselect")</option>
+        <option class="default-option" value="">$i18n.getText("common.words.none")</option>
+		
+		#set($counter = 1)
+		#foreach ($optlvl1 in $optionsMap.keySet())
+			<option class="option-group-$counter" value="$optlvl1" #if ($option1value && $option1value == $optlvl1) selected="selected" #end>$optlvl1</option>
+			#set($counter = $counter + 1)
+		#end
+	</select>
+	<select class="select cascadingselect-child" id="st_${customField.id}:1" name="st_${customField.id}:1" onChange="document.getElementById('$customField.id').value = document.getElementById('st_${customField.id}').options[document.getElementById('st_${customField.id}').selectedIndex].value + ' ;' + this.options[this.selectedIndex].value;">
+        <option class="default-option" value="">$i18n.getText("common.words.pleaseselect")</option>
+
+		#set($counter = 1)
+		#foreach ($optlvl1 in $optionsMap.keySet())
+		<option class="option-group-$counter" value="">$i18n.getText("common.words.pleaseselect")</option>
+			#foreach($optlvl2 in $optionsMap.get($optlvl1))
+				<option class="option-group-$counter" value="$optlvl2" #if ($option2value && $option2value == $optlvl2) selected="selected" #end>$optlvl2</option>
+			#end
+			#set($counter = $counter + 1)
+		#end
+	</select>
+    <input class="text" id="$customField.id" name="$customField.id" type="hidden" value="$textutils.htmlEncode($!value)"/>
+#customControlFooter ($action $customField.id $fieldLayoutItem.fieldDescription $displayParameters $auiparams)
+$!{auiparams.clear()}

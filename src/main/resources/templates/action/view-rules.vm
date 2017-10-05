@@ -1,0 +1,118 @@
+<script>
+	function fnValidate(){
+		var ruleName = document.getElementById('ruleName');
+		var jqlrule = document.getElementById('jqlRule');
+		
+		if (ruleName.value.trim().length == 0){
+			alert("Rule Name cannot be blank");
+			return false;
+		}else if (jqlrule.value.trim().length == 0){
+			alert("JQL Rule cannot be blank");
+			return false;
+		}
+		else{
+			document.add-rule.submit();
+			return true;
+		}
+	}
+</script>
+
+<div>	
+	<table class="jiraform  maxWidth">
+		<tbody>
+			<tr>
+				<td class="jiraformheader">
+					<h3 class="formtitle">JQL Rule Actions</h3>
+				</td>
+			</tr>
+			<tr>
+				<td class="jiraformbody">
+					<p>Configure the JQL Rules and its actions</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<br>
+	
+	<table bgcolor="#bbbbbb" border="0" cellpadding="0" cellspacing="0" width="80%" style="align:left;">
+		<tbody>
+			<tr><td>
+				<table border="0" cellpadding="4" cellspacing="1" width="100%">
+					<thead>
+					<tr bgcolor="#F0F0F0">
+						<th class="colHeaderLink" width="5%"><b>S.No.</b></th>
+						<th class="colHeaderLink" width="15%"><b>Name</b></th>
+						<th class="colHeaderLink" width="60%"><b>JQL Rule</b></th>
+						<th class="colHeaderLink" width="5%"><b>Active</b></th>
+						<th class="colHeaderLink" width="15%"><b>Actions</b></th>
+					</tr>
+					</thead>
+					<tbody>
+					#set ($counter = 1)
+					#if ($rules.size() > 0)
+						#foreach ($rule in $rules)
+						<tr #if($counter % 2 == 0) bgcolor="#fffff0" #else bgcolor="#ffffff" #end>
+							<td width="5%">$counter</td>
+							<td width="15%">$rule.name</td>
+							<td width="60%">$rule.JQL <span id="jqlerrormsg" class="icon #if ($rule.JQLValid) jqlgood #else jqlerror #end"></span> </td>
+							<td width="5%">#if ($rule.ruleActive)<span style="color:green;">Yes</span>#else <span style="color:red;">No</span>#end</td>
+							<td width="15%"><a href="JQLRuleActionConfigAction.jspa?ruleId=$rule.ID">Config</a> | <a href="JQLRuleConfigAction!editRule.jspa?ruleId=$rule.ID">Edit</a> | <a href="JQLRuleConfigAction!deleteRule.jspa?ruleId=$rule.ID">Delete</a> | <a href="JQLRuleConfigAction!activateRule.jspa?ruleId=$rule.ID">#if($rule.ruleActive)Deactivate #else Activate #end</a></td>
+						</tr>
+						#set($counter = $counter + 1)
+						#end
+					#else
+						<tr #if($counter % 2 == 0) bgcolor="#fffff0" #else bgcolor="#ffffff" #end>
+							<td colspan="5">There are no rules configured</td>
+						</tr>
+					#end
+					</tbody>
+				</table>
+			</td></tr>
+		</tbody>
+	</table>
+</div>
+<br>
+<div>
+	<form id="add-rule" name="add-rule" action="$req.getContextPath()/secure/admin/JQLRuleConfigAction!addRule.jspa">
+		<table class="jiraform maxWidth">
+			<tbody>
+				<tr class="titlerow">
+					<td colspan="2" class="jiraformheader">
+						<h3 class="formtitle">Add Rule</h3>
+					</td>
+				</tr>
+				<tr class="descriptionrow">
+					<td colspan="2" class="jiraformheader">
+					<div class="desc-wrap">Add JQL Rules</div>
+					#if ($errorMessages)
+						#foreach ($msg in $errorMessages)
+							<div style="color:red;font-weight:bold">$msg</div>
+						#end
+					#end
+					</td>
+				</tr>
+				
+				<tr>
+					<td class="fieldLabelArea">Name :</td>
+					<td bgcolor="#ffffff" class="fieldValueArea">
+						<input type="text" id="ruleName" name="ruleName" style="width:30%">
+					</td>
+				</tr>
+
+				<tr>
+					<td class="fieldLabelArea">JQL Rule :</td>
+					<td bgcolor="#ffffff" class="fieldValueArea">
+						<textarea rows="4" cols="50" id="jqlRule" name="jqlRule" style="width:30%"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td class="jiraformfooter">&nbsp;</td>
+					<td colspan="1">
+						<input type="submit" class="aui-button" name="Add" value="Add" id="add_submit" accesskey="s" title="Press Alt+s to submit form" class="spaced " onClick="fnValidate(this); return false;">
+					</td>
+				</tr>
+				
+			</tbody>
+		</table>		
+	</form>
+</div>

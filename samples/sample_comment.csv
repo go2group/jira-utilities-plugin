@@ -1,0 +1,28 @@
+Issuekey,Comment,Comment,Comment
+DP-48,04/18/2012 04:06:54 PM;PENNYC;can't reproduced on build 100.,"04/09/2012 02:04:10 PM;PENNYC;Dear Yoshii-san,
+file is attached. 
+Please let us know if there is any probelm.
+thanks.
+Penny","01/24/2012 10:47:12 PM;SREEDHAN;Hi Suzuki-san,
+
+Thank you for your support always.
+
+    Our QA has reported this issue. Printing took 4 minutes for this 4-page-test-file. From the apip logs we observer that there some delay from engine in printing the job even after fiery sends ""GO"" command. And I was seeing a delay of nearly 100sec in GS command from engine for page 3 to page 4. Please find the below snippet of logs. Could you please review this from engine side. Please find the attached apip logs(aegis_apip0.zip).
+Go command from fiery to engine for page 3. 
+0001996073: TX: [GO ] job id=0x0601, process id=3, mode=0 
+0001996073: input source=0x0010, output dest.=0x0100, paper id=3, paper count=0x01 
+0001996073: OEM: page (process id: 0x3 ) is now PAGE_PRINTING. 
+0001996073: <---- 05 02 06 01 02 00 01 00 04 00 0B 
+0001996073: : [PS ] job id=0x0601, process id=2, color plain=0x00, printer status=0x01, abort reason=0x00 
+0001996268: <---- 05 04 06 01 03 
+0001996268: : [GI ] job id=0x0601, process id=3
+GS command from engine to fiery to send next page/job. 
+0002098529: ----> 04 51 FF 00 10 
+0002098547: <---- 05 07 06 01 03 
+0002098548: : [GS ] job id=0x0601, process id=3 
+0002098564: ----> 06 81 02 00 00 00 
+0002098564: TX: [IMQ] quality=0x02, transfer direction=0 (AU->Eng) 
+
+Thanks
+Sreedhar
+"

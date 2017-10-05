@@ -1,0 +1,6 @@
+##disable_html_escaping() TODO REENABLE
+#if ($canview.booleanValue())
+	<customfieldvalue>$value</customfieldvalue>
+#else
+	<customfieldvalue>Access Restricted</customfieldvalue>
+#end

@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="${project.groupId}.${project.artifactId}" name="${project.name}" plugins-version="2">
+  <plugin-info>
+    <description>${project.description}</description>
+    <version>${project.version}</version>
+    <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+    <param name="plugin-icon">images/g2gicon.jpg</param>
+    <param name="plugin-logo">images/g2glogo.jpg</param>
+    <param name="plugin-banner">images/g2glogo.jpg</param>
+    <param name="vendor-icon">images/g2gicon.jpg</param>
+    <param name="vendor-logo">images/g2glogo.jpg</param>
+  </plugin-info>
+  <resource type="i18n" name="i18n" location="atlassian-plugin"/>
+  <!-- Menu item to have any Application Level configurations for the utility -->
+  <web-section key="g2g_menu" name="Go2Group Utilities" location="admin_plugins_menu" weight="1000">
+    <label key="Go2Group Utilities"/>
+    <condition class="com.atlassian.jira.plugin.webfragment.conditions.UserIsAdminCondition"/>
+  </web-section>
+  <!-- Customfield Utilities START -->
+  <!-- Customfieldtypes -->
+  <customfield-type key="csit-cf" name="Cascading Select (per Issuetype context)" class="com.go2group.jira.plugin.customfield.CSITCFType">
+    <description>Cascading Select field with options configurable per Issuetype</description>
+    <resource type="velocity" name="view" location="templates/customfield/view-csit.vm"/>
+    <resource type="velocity" name="edit" location="templates/customfield/edit-csit.vm"/>
+  </customfield-type>
+  <customfield-type key="listfield" name="Ajax List Field" class="com.go2group.jira.plugin.customfield.AjaxListField">
+    <description>Choose multiple values in an ajax select list.</description>
+    <resource type="velocity" name="view" location="templates/plugins/fields/view/view-multiselect.vm"/>
+    <resource type="velocity" name="edit" location="templates/customfield/edit-ajax-list.vm"/>
+    <resource type="velocity" name="xml" location="templates/plugins/fields/xml/xml-multiselect.vm"/>
+  </customfield-type>
+  <customfield-type key="parentsummary-cf" name="Parent Summary" class="com.go2group.jira.plugin.customfield.ParentSummaryCFType">
+    <description>Calculated customfield to display the parent summary</description>
+    <resource type="velocity" name="view" location="templates/customfield/view-parentsummary.vm"/>
+  </customfield-type>
+  <customfield-type key="parentkey-cf" name="Parent Key" class="com.go2group.jira.plugin.customfield.ParentKeyCFType">
+    <description>Calculated customfield to display the parent key</description>
+    <resource type="velocity" name="view" location="templates/customfield/view-parentkey.vm"/>
+  </customfield-type>
+  <customfield-type key="restricted_fields_user_picker" name="Restricted User Picker" class="com.go2group.jira.plugin.customfield.RestrictedUserPicker">
+    <description>Custom fields with project-specific security restrictions.</description>
+    <resource type="velocity" name="view" location="templates/customfield/view-userpicker.vm"/>
+    <resource type="velocity" name="edit" location="templates/customfield/edit-userpicker.vm"/>
+    <resource type="velocity" name="xml" location="templates/customfield/view-userpicker.vm"/>
+    <resource type="velocity" name="column-view" location="templates/customfield/view-userpicker.vm"/>
+  </customfield-type>
+  <customfield-type key="restricted_fields_select" name="Restricted Select List" class="com.go2group.jira.plugin.customfield.RestrictedSelectList">
+    <description>Custom fields with project-specific security restrictions.</description>
+    <resource type="velocity" name="view" location="templates/customfield/view-textfield.vm"/>
+    <resource type="velocity" name="edit" location="templates/customfield/edit-select.vm"/>
+    <resource type="velocity" name="xml" location="templates/customfield/view-textfield.vm"/>
+    <resource type="velocity" name="column-view" location="templates/customfield/view-textfield.vm"/>
+  </customfield-type>
+  <customfield-type key="restricted_fields_text" name="Restricted Text Field" class="com.go2group.jira.plugin.customfield.RestrictedTextField">
+    <description>Custom fields with project-specific security restrictions.</description>
+    <resource type="velocity" name="view" location="templates/customfield/view-textfield.vm"/>
+    <resource type="velocity" name="edit" location="templates/customfield/edit-textfield.vm"/>
+    <resource type="velocity" name="xml" location="templates/customfield/view-textfield.vm"/>
+    <resource type="velocity" name="column-view" location="templates/customfield/view-textfield.vm"/>
+  </customfield-type>
+  <customfield-type key="restricted_fields_textarea" name="Restricted Text Area" class="com.go2group.jira.plugin.customfield.RestrictedTextArea">
+    <description>Custom fields with project-specific security restrictions.</description>
+    <resource type="velocity" name="view" location="templates/customfield/view-textarea.vm"/>
+    <resource type="velocity" name="edit" location="templates/customfield/edit-textarea.vm"/>
+    <resource type="velocity" name="xml" location="templates/customfield/view-textarea.vm"/>
+    <resource type="velocity" name="column-view" location="templates/customfield/view-textarea.vm"/>
+  </customfield-type>
+  <customfield-type key="restricted_fields_date" name="Restricted Date Field" class="com.go2group.jira.plugin.customfield.RestrictedDateField">
+    <description>Custom fields with project-specific security restrictions.</description>
+    <resource type="velocity" name="edit" location="templates/customfield/edit-datefield.vm"/>
+    <resource type="velocity" name="view" location="templates/customfield/view-datefield.vm"/>
+    <resource type="velocity" name="xml" location="templates/customfield/view-datefield.vm"/>
+    <resource type="velocity" name="column-view" location="templates/customfield/view-datefield.vm"/>
+  </customfield-type>
+  <customfield-type key="restricted_fields_cascadingselect" name="Restricted Cascading Select" class="com.go2group.jira.plugin.customfield.RestrictedCascadingSelect">
+    <description>Custom fields with project-specific security restrictions.</description>
+    <resource type="velocity" name="view" location="templates/customfield/view-cascadingselect.vm"/>
+    <resource type="velocity" name="edit" location="templates/customfield/edit-cascadingselect.vm"/>
+    <resource type="velocity" name="xml" location="templates/customfield/xml-cascadingselect.vm"/>
+  </customfield-type>
+  <customfield-type key="restricted_fields_number" name="Restricted Number Field" class="com.go2group.jira.plugin.customfield.RestrictedNumberField">
+    <description>Custom fields with project-specific security restrictions.</description>
+    <resource type="velocity" name="view" location="templates/customfield/view-number.vm"/>
+    <resource type="velocity" name="edit" location="templates/customfield/edit-number.vm"/>
+    <resource type="velocity" name="xml" location="templates/customfield/xml-number.vm"/>
+  </customfield-type>
+  <customfield-type key="restricted_fields_datetime" name="Restricted Datetime Field" class="com.go2group.jira.plugin.customfield.RestrictedDatetimeField">
+    <description>Custom fields with project-specific security restrictions.</description>
+    <resource type="velocity" name="view" location="templates/customfield/view-datetime.vm"/>
+    <resource type="velocity" name="edit" location="templates/customfield/edit-datefield.vm"/>
+    <resource type="velocity" name="xml" location="templates/customfield/xml-datetime.vm"/>
+  </customfield-type>
+  <customfield-type key="restricted_fields_grouppicker" name="Restricted Group Picker" class="com.go2group.jira.plugin.customfield.RestrictedMultiGroupField">
+    <param name="multiple" value="false"/>
+    <description>Custom fields with project-specific security restrictions.</description>
+    <resource type="velocity" name="view" location="templates/customfield/view-multigroup.vm"/>
+    <resource type="velocity" name="edit" location="templates/customfield/edit-multigroup.vm"/>
+    <resource type="velocity" name="xml" location="templates/customfield/xml-multigroup.vm"/>
+  </customfield-type>
+  <customfield-type key="restricted_fields_multigrouppicker" name="Restricted Multi Group Picker" class="com.go2group.jira.plugin.customfield.RestrictedMultiGroupField">
+    <param name="multiple" value="true"/>
+    <description>Custom fields with project-specific security restrictions.</description>
+    <resource type="velocity" name="view" location="templates/customfield/view-multigroup.vm"/>
+    <resource type="velocity" name="edit" location="templates/customfield/edit-multigroup.vm"/>
+    <resource type="velocity" name="xml" location="templates/customfield/xml-multigroup.vm"/>
+  </customfield-type>
+  <customfield-type key="restricted_fields_multiselect" name="Restricted Multi Select" class="com.go2group.jira.plugin.customfield.RestrictedMultiSelectField">
+    <description>Custom fields with project-specific security restrictions.</description>
+    <resource type="velocity" name="view" location="templates/customfield/view-multiselect.vm"/>
+    <resource type="velocity" name="edit" location="templates/customfield/edit-multiselect.vm"/>
+    <resource type="velocity" name="xml" location="templates/customfield/xml-multiselect.vm"/>
+  </customfield-type>
+  <customfield-type key="restricted_fields_multichkbox" name="Restricted Multi Checkboxes" class="com.go2group.jira.plugin.customfield.RestrictedMultiSelectField">
+    <description>Custom fields with project-specific security restrictions.</description>
+    <resource type="velocity" name="view" location="templates/customfield/view-multiselect.vm"/>
+    <resource type="velocity" name="edit" location="templates/customfield/edit-multicheckboxes.vm"/>
+    <resource type="velocity" name="xml" location="templates/customfield/xml-multiselect.vm"/>
+  </customfield-type>
+  <customfield-type key="restricted_fields_readonly" name="Restricted Readonly Field" class="com.go2group.jira.plugin.customfield.RestrictedReadonlyField">
+    <description>Custom fields with project-specific security restrictions.</description>
+    <resource type="velocity" name="view" location="templates/customfield/view-rawtext.vm"/>
+    <resource type="velocity" name="xml" location="templates/customfield/xml-basictext.vm"/>
+  </customfield-type>
+  <customfield-type key="restricted_fields_radiobtns" name="Restricted Radio Buttons" class="com.go2group.jira.plugin.customfield.RestrictedSelectList">
+    <description>Custom fields with project-specific security restrictions.</description>
+    <resource type="velocity" name="view" location="templates/customfield/view-textfield.vm"/>
+    <resource type="velocity" name="edit" location="templates/customfield/edit-radio.vm"/>
+    <resource type="velocity" name="xml" location="templates/customfield/xml-select.vm"/>
+  </customfield-type>
+  <customfield-type key="useringroup" name="User In Group Multi Select" class="com.go2group.jira.plugin.customfield.MultiSelectUserInGroup">
+    <description>Choose multiple values in a select list of user, restricted by a group.</description>
+    <resource type="velocity" name="view" location="templates/plugins/fields/view/view-multiselect.vm"/>
+    <resource type="velocity" name="edit" location="templates/customfield/edit-useringroup.vm"/>
+    <resource type="velocity" name="xml" location="templates/plugins/fields/xml/xml-multiselect.vm"/>
+  </customfield-type>
+  <customfield-type key="multiusergrouppicker" name="User Picker By Group" class="com.go2group.jira.plugin.customfield.MultiUserPickerInGroup">
+    <description>Choose multiple users from the user base via a popup picker window limited by a specific group.</description>
+    <resource type="velocity" name="view" location="templates/plugins/fields/view/view-multiuser.vm"/>
+    <resource type="velocity" name="column-view" location="templates/plugins/fields/view/view-multiuser.vm"/>
+    <resource type="velocity" name="edit" location="templates/customfield/edit-multiuserpicker.vm"/>
+    <resource type="velocity" name="xml" location="templates/plugins/fields/xml/xml-multiselect.vm"/>
+  </customfield-type>
+  <customfield-type key="all-comment-field" name="Comment Field" class="com.go2group.jira.plugin.customfield.CommentField">
+    <description>Field to show all comments in issue navigator</description>
+    <resource type="velocity" name="column-view" location="templates/customfield/view-comment.vm"/>
+  </customfield-type>
+  <customfield-type name="Unique Sequence Key" key="UniqueSequenceKey" class="com.go2group.jira.plugin.customfield.UniqueSequenceKeyField">
+    <description>Unique Sequence Key that is global to all projects</description>
+    <resource type="velocity" name="view" location="/templates/customfield/view-usk.vm"/>
+    <!-- <resource type="velocity" name="edit" location="/templates/customfield/edit-usk.vm"/> -->
+    <!-- Readonly field -->
+    <resource type="velocity" name="xml" location="/templates/customfield/xml-usk.vm"/>
+  </customfield-type>
+  <customfield-type name="Cascading Select Mandatory Field" key="cascading-select-mandatory-field" class="com.go2group.jira.plugin.customfield.CascadingSubSelectMandatoryField">
+    <description>Cascading Select field, that mandates the sub-select list</description>
+    <resource type="velocity" name="view" location="templates/customfield/view-cascadingsubselect.vm"/>
+    <resource type="velocity" name="edit" location="templates/customfield/edit-cascadingsubselect.vm"/>
+    <resource type="velocity" name="xml" location="templates/customfield/xml-cascadingsubselect.vm"/>
+  </customfield-type>
+  <!-- Customfield Searchers -->
+  <customfield-searcher key="subtypesearcher" name="Cascading Select Searcher" class="com.go2group.jira.plugin.customfield.searcher.CSITSearcher">
+    <description>Cascading Select searcher</description>
+    <resource type="velocity" name="search" location="templates/customfield/search-csit.vm"/>
+    <resource type="velocity" name="view" location="templates/customfield/view-searcher-csit.vm"/>
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="csit-cf"/>
+  </customfield-searcher>
+  <customfield-searcher key="userbygrouppickersearcher" name="User By Group Picker Searcher" class="com.go2group.jira.plugin.customfield.searcher.UserPickerInGroupSearcher">
+    <description key="admin.customfield.searcher.userpickersearcher.desc">Allow to search for a user restricted by a group using a userpicker.</description>
+    <resource type="velocity" name="label" location="templates/plugins/fields/view-searcher/label-searcher-user.vm"/>
+    <resource type="velocity" name="search" location="templates/plugins/fields/edit-searcher/search-userpicker.vm"/>
+    <resource type="velocity" name="view" location="templates/plugins/fields/view-searcher/view-searcher-basictext.vm"/>
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="multiusergrouppicker"/>
+  </customfield-searcher>
+  <customfield-searcher key="restricted-grouppickersearcher" name="Group Picker Searcher" i18n-name-key="admin.customfield.searcher.grouppickersearcher.name" class="com.go2group.jira.plugin.customfield.searcher.RestrictedGroupPickerSearcher">
+    <description key="admin.customfield.searcher.grouppickersearcher.desc">Allow to search for a group using a group picker.</description>
+    <resource type="velocity" name="label" location="templates/plugins/fields/view-searcher/label-searcher-group.vm"/>
+    <resource type="velocity" name="search" location="templates/plugins/fields/edit-searcher/search-grouppicker.vm"/>
+    <resource type="velocity" name="view" location="templates/plugins/fields/view-searcher/view-searcher-grouppicker.vm"/>
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="restricted_fields_grouppicker"/>
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="restricted_fields_multigrouppicker"/>
+  </customfield-searcher>
+  <customfield-searcher key="restricted-datetimerange" name="Date Time Range picker" i18n-name-key="admin.customfield.searcher.datetimerange.name" class="com.atlassian.jira.issue.customfields.searchers.DateTimeRangeSearcher">
+    <description key="admin.customfield.searcher.datetimerange.desc">Allow searching for a date and time that is between two other dates and times</description>
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="restricted_fields_datetime"/>
+  </customfield-searcher>
+  <customfield-searcher key="listfield-searcher" name="List Field Searcher" class="com.go2group.jira.plugin.customfield.searcher.ListFieldSearcher">
+    <description key="admin.customfield.searcher.multiselectsearcher.desc">Search for multiple values using a single select list.</description>
+    <resource type="velocity" name="search" location="templates/plugins/fields/edit-searcher/search-multiselect.vm"/>
+    <resource type="velocity" name="view" location="templates/plugins/fields/view-searcher/view-searcher-multioption.vm"/>
+    <resource type="velocity" name="label" location="templates/plugins/fields/view-searcher/label-searcher-htmltext.vm"/>
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="listfield"/>
+  </customfield-searcher>
+  <customfield-searcher key="restricted_fields_user_picker_searcher" name="User Picker Searcher" class="com.go2group.jira.plugin.customfield.searcher.RestrictedUserPickerSearcher">
+    <description>Custom fields with project-specific security restrictions.</description>
+    <resource type="velocity" name="search" location="templates/plugins/fields/edit-searcher/search-userpicker.vm"/>
+    <resource type="velocity" name="view" location="templates/plugins/fields/view-searcher/view-searcher-userproperty.vm"/>
+    <resource type="velocity" name="label" location="templates/plugins/fields/view-searcher/label-searcher-user.vm"/>
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="restricted_fields_user_picker"/>
+  </customfield-searcher>
+  <customfield-searcher key="restricted_fields_select_searcher" name="Select List Searcher" class="com.go2group.jira.plugin.customfield.searcher.RestrictedSelectSearcher">
+    <description>Custom fields with project-specific security restrictions.</description>
+    <resource type="velocity" name="search" location="templates/plugins/fields/edit-searcher/search-select.vm"/>
+    <resource type="velocity" name="view" location="templates/plugins/fields/view-searcher/view-searcher-select.vm"/>
+    <resource type="velocity" name="label" location="templates/plugins/fields/view-searcher/label-searcher-basictext.vm"/>
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="restricted_fields_select"/>
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="restricted_fields_multiselect"/>
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="restricted_fields_multichkbox"/>
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="restricted_fields_radiobtns"/>
+  </customfield-searcher>
+  <customfield-searcher key="restricted_fields_text_searcher" name="Text Searcher" class="com.go2group.jira.plugin.customfield.searcher.RestrictedTextSearcher">
+    <description>Custom fields with project-specific security restrictions.</description>
+    <resource type="velocity" name="search" location="templates/plugins/fields/edit-searcher/search-basictext.vm"/>
+    <resource type="velocity" name="view" location="templates/plugins/fields/view-searcher/view-searcher-basictext.vm"/>
+    <resource type="velocity" name="label" location="templates/plugins/fields/view-searcher/label-searcher-basictext.vm"/>
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="restricted_fields_text"/>
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="restricted_fields_textarea"/>
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="restricted_fields_readonly"/>
+  </customfield-searcher>
+  <customfield-searcher key="firstreponsedatesearcher" name="First Reponse Date Searcher" i18n-name-key="admin.customfield.searcher.daterange.name" class="com.go2group.jira.plugin.customfield.searcher.RestrictedDateRangeSearcher">
+    <description key="admin.customfield.searcher.daterange.desc">Allow searching for a date that is between two other dates</description>
+    <!-- CHECK THIS - WHY NO VELOCITY FILES -->
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="restricted_fields_date"/>
+  </customfield-searcher>
+  <customfield-searcher key="restricted-cascadingselectsearcher" name="Cascading Select Searcher" i18n-name-key="admin.customfield.searcher.cascadingselectsearcher.name" class="com.go2group.jira.plugin.customfield.searcher.RestrictedCascadingSelectSearcher">
+    <description key="admin.customfield.searcher.cascadingselectsearcher.desc">Search for multiple values using two select lists.</description>
+    <resource type="velocity" name="search" location="templates/plugins/fields/edit-searcher/search-cascadingselect.vm"/>
+    <resource type="velocity" name="view" location="templates/plugins/fields/view-searcher/view-searcher-option.vm"/>
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="restricted_fields_cascadingselect"/>
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="cascading-select-mandatory-field"/>
+  </customfield-searcher>
+  <customfield-searcher key="restricted-exactnumber" name="Number Searcher" i18n-name-key="admin.customfield.searcher.exactnumber.name" class="com.atlassian.jira.issue.customfields.searchers.ExactNumberSearcher">
+    <description key="sadmin.customfield.searcher.exactnumber.desc">Allow searching for a number which exactly matches.</description>
+    <resource type="velocity" name="search" location="templates/plugins/fields/edit-searcher/search-basictext.vm"/>
+    <resource type="velocity" name="view" location="templates/plugins/fields/view-searcher/view-searcher-basictext.vm"/>
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="restricted_fields_number"/>
+  </customfield-searcher>
+  <customfield-searcher key="restricted-numberrange" name="Number range searcher" i18n-name-key="admin.customfield.searcher.numberrange.name" class="com.atlassian.jira.issue.customfields.searchers.NumberRangeSearcher">
+    <description key="admin.customfield.searcher.numberrange.desc">Allow searching for a number that is in a given range</description>
+    <resource type="velocity" name="search" location="templates/plugins/fields/edit-searcher/search-number-range.vm"/>
+    <resource type="velocity" name="view" location="templates/plugins/fields/view-searcher/view-searcher-number-range.vm"/>
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="restricted_fields_number"/>
+  </customfield-searcher>
+  <customfield-searcher key="exacttextsearcher" name="Exact Text Searcher" i18n-name-key="admin.customfield.searcher.exacttextsearcher.name" class="com.atlassian.jira.issue.customfields.searchers.ExactTextSearcher">
+    <description key="admin.customfield.searcher.exacttextsearcher.desc">Search for values exactly matching the input</description>
+    <resource type="velocity" name="search" location="templates/plugins/fields/edit-searcher/search-basictext.vm"/>
+    <resource type="velocity" name="view" location="templates/plugins/fields/view-searcher/view-searcher-basictext.vm"/>
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="UniqueSequenceKey"/>
+  </customfield-searcher>
+  <!-- Customfield associated modules -->
+  <component key="csit-service" name="CSIT Service" class="com.go2group.jira.plugin.ao.CSITServiceImpl"/>
+  <webwork1 key="csit_action" name="CSIT Action" class="java.lang.Object">
+    <actions>
+      <action name="com.go2group.jira.plugin.web.action.ConfigureCSIT" alias="ConfigureCSIT">
+        <view name="configure">/templates/customfield/configure-csit-options.vm</view>
+        <view name="view1">/templates/customfield/view-csit-optlvl1.vm</view>
+        <view name="view2">/templates/customfield/view-csit-optlvl2.vm</view>
+        <!-- <view name="update">/templates/update-csit-options.vm</view> -->
+      </action>
+    </actions>
+  </webwork1>
+  <web-resource key="picker-resource" name="Option Picker JS">
+    <resource type="download" name="initOptionPickers.js" location="includes/js/initOptionPickers.js"/>
+    <context>jira.general</context>
+  </web-resource>
+  <web-item key="restricted_fields_menu" name="Restricted Field Config Menu" section="system.view.project.operations" weight="1000">
+    <label>Restricted Field Access</label>
+    <description>Configure Restricted Field Access</description>
+    <link linkId="restricted_fields_configure_link">/secure/RestrictedFieldPluginConfig.jspa?projectkey=$helper.project.key</link>
+    <condition class="com.go2group.jira.plugin.condition.ProjectAdminCondition"/>
+  </web-item>
+  <webwork1 key="restricted_fields_configure_actions" name="Restricted Field Plugin Configuration" class="java.lang.Object">
+    <actions>
+      <action name="com.go2group.jira.plugin.web.action.RestrictedFieldConfigActionSupport" alias="RestrictedFieldPluginConfig">
+        <view name="error">/templates/action/restricted_fields_config.vm</view>
+        <view name="success">/templates/action/restricted_fields_config.vm</view>
+        <view name="input">/templates/action/restricted_fields_config.vm</view>
+      </action>
+    </actions>
+  </webwork1>
+  <web-resource key="myautocomplete" name="myautocomplete">
+    <resource type="download" name="myautocomplete.js" location="includes/js/myautocomplete.js"/>
+    <context>jira.general</context>
+  </web-resource>
+  <rest key="rest-service-resources" path="/go2group" version="1.0">
+    <description>Provides the REST resource for the user by group picker.</description>
+  </rest>
+  <ao key="ao-module">
+    <description>The module configuring the Active Objects service used by this plugin</description>
+    <entity>com.go2group.jira.plugin.ao.MultiUsrPkrEntity</entity>
+    <entity>com.go2group.jira.plugin.ao.UniqueSequenceKey</entity>
+    <entity>com.go2group.jira.plugin.ao.JQLRule</entity>
+    <entity>com.go2group.jira.plugin.ao.JQLRuleAction</entity>
+    <entity>com.go2group.jira.plugin.ao.CSITEntity</entity>
+    <entity>com.go2group.jira.plugin.ao.RegexEntity</entity>
+    <entity>com.go2group.jira.plugin.ao.NumberFormatEntity</entity>
+    <entity>com.go2group.jira.plugin.ao.PriorityDueDate</entity>
+    <entity>com.go2group.jira.plugin.ao.entity.ProjectAttachment</entity>
+  </ao>
+  <component-import key="activeObjects" name="Active Objects service" interface="com.atlassian.activeobjects.external.ActiveObjects" public="true">
+    <description>Component to access Active Objects functionality from the plugin</description>
+  </component-import>
+  <component key="txProcessor" name="Transactional Annotation Processor" class="com.atlassian.activeobjects.external.TransactionalAnnotationProcessor">
+    <decription>Processes @Transactional annotations.</decription>
+  </component>
+  <component key="multiusrpickersvc" class="com.go2group.jira.plugin.ao.MultiUserPickerServiceImpl" public="true">
+    <interface>com.go2group.jira.plugin.ao.MultiUserPickerService</interface>
+  </component>
+  
+  <webwork1 key="multi-usrpicker-action" name="MultiUserPicker Config">
+    <actions>
+      <action name="com.go2group.jira.plugin.web.action.MultiUserPickerConfigAction" alias="ConfigureMultiUPInGroup">
+        <view name="success">/templates/action/multiuser-config.vm</view>
+      </action>
+    </actions>
+  </webwork1>
+  <component key="uniqueSequenceGenerator" class="com.go2group.jira.plugin.ao.UskAoServiceImpl" public="true">
+    <interface>com.go2group.jira.plugin.ao.UskAoService</interface>
+  </component>
+  <webwork1 key="usk-action" name="USK actions">
+    <actions>
+      <action name="com.go2group.jira.plugin.web.action.ConfigureUSK" alias="configureUSK">
+        <view name="input">/templates/action/config-usk.vm</view>
+        <view name="success">/templates/action/config-view-usk.vm</view>
+      </action>
+    </actions>
+  </webwork1>
+  <component-import key="eventPublisher" interface="com.atlassian.event.api.EventPublisher"/>
+  <component key="eventListener" class="com.go2group.jira.plugin.listener.USKListener">
+    <description>Listner that listens to Create Events for generating Unique Sequence Key</description>
+  </component>
+  <!-- Customfield Utilities END -->
+  <!-- Workflow Utilities START -->
+  <!-- Validators -->
+  <workflow-validator key="resolution-validator" name="Resolution Validator" i18n-name-key="resolution-validator.name" class="com.go2group.jira.plugin.workflow.validator.ResolutionValidatorFactory">
+    <description key="resolution-validator.description">Checks for a mandatory field based on the selected workflow resolution</description>
+    <validator-class>com.go2group.jira.plugin.workflow.validator.ResolutionValidator</validator-class>
+    <resource type="velocity" name="view" location="templates/validators/resolution-validator.vm"/>
+    <resource type="velocity" name="input-parameters" location="templates/validators/resolution-validator-input.vm"/>
+    <resource type="velocity" name="edit-parameters" location="templates/validators/resolution-validator-input.vm"/>
+  </workflow-validator>
+  <workflow-validator key="required-for-user-group-field-validator" name="Required for User Group Field validator" class="com.go2group.jira.plugin.workflow.validator.UserGroupFieldValidatorFactory">
+    <description>Field required by Group XXX.</description>
+    <validator-class>com.go2group.jira.plugin.workflow.validator.UserGroupFieldValidator</validator-class>
+    <resource type="velocity" name="view" location="templates/validators/view-group-validator.vm"/>
+    <resource type="velocity" name="input-parameters" location="templates/validators/group-validator.vm"/>
+    <resource type="velocity" name="edit-parameters" location="templates/validators/group-validator.vm"/>
+  </workflow-validator>
+  <workflow-validator key="required-for-user-role-field-validator" name="Required for User Project Role field validator" class="com.go2group.jira.plugin.workflow.validator.UserProjectRoleFieldValidatorFactory">
+    <description>Field required by Project Role XXX.</description>
+    <validator-class>com.go2group.jira.plugin.workflow.validator.UserProjectRoleFieldValidator</validator-class>
+    <resource type="velocity" name="view" location="templates/validators/view-project-role-validator.vm"/>
+    <resource type="velocity" name="input-parameters" location="templates/validators/project-role-validator.vm"/>
+    <resource type="velocity" name="edit-parameters" location="templates/validators/project-role-validator.vm"/>
+  </workflow-validator>
+  <workflow-validator key="test-validator" name="Field Membership Validator" class="com.go2group.jira.plugin.workflow.validator.FieldMembershipValidatorFactory">
+    <description>Validates the chosen user field against the chosen group membership</description>
+    <validator-class>com.go2group.jira.plugin.workflow.validator.FieldMembershipValidator</validator-class>
+    <resource type="velocity" name="view" location="templates/validators/fieldmembership-validator-view.vm"/>
+    <resource type="velocity" name="input-parameters" location="templates/validators/fieldmembership-validator-input.vm"/>
+    <resource type="velocity" name="edit-parameters" location="templates/validators/fieldmembership-validator-edit.vm"/>
+  </workflow-validator>
+  <!-- Postfunctions -->
+  <workflow-function key="set-resetcreatedtime-postfunction" name="Reset Created Time" class="com.atlassian.jira.plugin.workflow.WorkflowNoInputPluginFactory">
+    <description>Reset Created Time to Current Time Postfunction</description>
+    <function-class>com.go2group.jira.plugin.workflow.postfunction.UpdateCreatedDatePostfunction</function-class>
+    <orderable>true</orderable>
+    <unique>true</unique>
+    <deletable>true</deletable>
+    <resource type="velocity" name="view" location="templates/postfunctions/set-resetcreatedtime-function-view.vm"/>
+  </workflow-function>
+  <workflow-function key="add-comment-function" name="Add Comment" class="com.go2group.jira.plugin.workflow.postfunction.CommentInputPFFactoryImpl">
+    <description>Add Comment in the issue</description>
+    <function-class>com.go2group.jira.plugin.workflow.postfunction.AddCommentPostfunction</function-class>
+    <orderable>true</orderable>
+    <unique>true</unique>
+    <deletable>true</deletable>
+    <resource type="velocity" name="view" location="templates/postfunctions/add-comment-function-view.vm"/>
+    <resource type="velocity" name="input-parameters" location="templates/postfunctions/add-comment-function-edit.vm"/>
+    <resource type="velocity" name="edit-parameters" location="templates/postfunctions/add-comment-function-edit.vm"/>
+  </workflow-function>
+  <workflow-function key="progress-workflow-function" name="Progress Workflow Function" class="com.go2group.jira.plugin.workflow.postfunction.ProgressWorkflowFunctionFactory">
+    <description>Progress to the selected workflow status</description>
+    <function-class>com.go2group.jira.plugin.workflow.postfunction.ProgressWorkflowFunction</function-class>
+    <orderable>true</orderable>
+    <unique>true</unique>
+    <deletable>true</deletable>
+    <resource type="velocity" name="view" location="templates/postfunctions/progress-workflow-function.vm"/>
+    <resource type="velocity" name="input-parameters" location="templates/postfunctions/progress-workflow-function-input.vm"/>
+    <resource type="velocity" name="edit-parameters" location="templates/postfunctions/progress-workflow-function-input.vm"/>
+  </workflow-function>
+  <workflow-function key="multiple-events-function" name="Multiple Events Workflow Function" class="com.go2group.jira.plugin.workflow.postfunction.MultipleEventsFunctionFactory">
+    <description>Throw all selected events</description>
+    <function-class>com.go2group.jira.plugin.workflow.postfunction.MultipleEventsFunction</function-class>
+    <orderable>true</orderable>
+    <unique>true</unique>
+    <deletable>true</deletable>
+    <resource type="velocity" name="view" location="templates/postfunctions/multiple-events-function.vm"/>
+    <resource type="velocity" name="input-parameters" location="templates/postfunctions/multiple-events-function-input.vm"/>
+    <resource type="velocity" name="edit-parameters" location="templates/postfunctions/multiple-events-function-input.vm"/>
+  </workflow-function>
+  <!-- Workflow Utilities END -->
+  <!-- Issuetab panel Utilities START -->
+  <issue-tabpanel key="st-comment-tabpanel" name="Subtask Comment Tab Panel" class="com.go2group.jira.plugin.web.panel.SubtaskCommentTabPanel" state="disabled"> <!-- JUP-76 -->
+    <description>Display Subtask comments</description>
+    <label>Sub-Task Comments</label>
+    <resource type="velocity" name="view" location="/templates/panel/stcomment.vm"/>
+    <default>true</default>
+    <order>100</order>
+    <sortable>true</sortable>
+    <supports-ajax-load>true</supports-ajax-load>
+  </issue-tabpanel>
+  <issue-tabpanel key="st-attachment-tabpanel" name="Subtask Attachment Tab Panel" class="com.go2group.jira.plugin.web.panel.SubtaskAttachmentTabPanel" state="disabled"> <!-- JUP-76 -->
+    <description>Display Subtask attachments</description>
+    <label>Sub-Task Attachments</label>
+    <resource type="velocity" name="view" location="/templates/panel/stattachment.vm"/>
+    <default>true</default>
+    <order>110</order>
+    <sortable>true</sortable>
+    <supports-ajax-load>true</supports-ajax-load>
+  </issue-tabpanel>
+  <!-- Issutab panel Utilities END -->
+  <!-- JQL Utilities START -->
+  <!-- JUP-76 - start -->
+  <!-- JUP-86 - Enabled as per customer request -->
+  <jql-function key="groups-of-currentuser" name="Groups of currentuser Function" class="com.go2group.jira.plugin.jql.GroupsOfCurrentUserFunction">
+    <fname>groupsOfCurrentUser</fname>
+    <description>Provides a JQL function to return list of current user groups. Example, if you have a Group Picker custom field, you can check if the selected group in the custom field is one of the groups that the current user belongs to using JQL function customfield in groupsOfCurrentUser()</description>
+    <list>true</list>
+  </jql-function>
+  <!-- JUP-76 - end -->
+  <!-- JQL Utilities END -->
+  <!-- Supporting Modules START-->
+  <!-- Supporting Modules END-->
+  <component-import key="pluginAccessor" interface="com.atlassian.plugin.PluginAccessor"/>
+  <component-import key="pluginController" interface="com.atlassian.plugin.PluginController"/>
+  <component-import key="txTemplate" interface="com.atlassian.sal.api.transaction.TransactionTemplate"/>
+  <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties"/>
+  <component-import key="templateRenderer" interface="com.atlassian.templaterenderer.TemplateRenderer"/>
+  <component-import key="pluginSettingsFactory" interface="com.atlassian.sal.api.pluginsettings.PluginSettingsFactory"/>
+  <component-import key="loginUriProvider" interface="com.atlassian.sal.api.auth.LoginUriProvider"/>
+  <component-import key="userManager" interface="com.atlassian.sal.api.user.UserManager"/>
+  <component-import key="i18nResolver" interface="com.atlassian.sal.api.message.I18nResolver"/>
+  <component-import key="userConverter" interface="com.atlassian.jira.issue.customfields.converters.UserConverter"/>
+  
+  <customfield-type name="Regex Based Custom Field" i18n-name-key="regex-based-custom-field.name" key="regex-based-custom-field" class="com.go2group.jira.plugin.customfield.RegexBasedCustomField">
+    <description key="regex-based-custom-field.description">Allows configuration of regular expression and validates if value matches regex</description>
+    <resource name="view" type="velocity" location="/templates/customfield/view-regex-custom-field.vm"/>
+    <resource name="edit" type="velocity" location="/templates/plugins/fields/edit/edit-textarea.vm"/>
+  </customfield-type>
+  <customfield-searcher key="regex-based-custom-field-searcher" name="Regex Based Custom Field Searcher" i18n-name-key="admin.customfield.searcher.textsearcher.name" class="com.atlassian.jira.issue.customfields.searchers.TextSearcher">
+    <description key="admin.customfield.searcher.textsearcher.desc">Search for values using a regex based custom field.</description>
+    <resource type="velocity" name="search" location="templates/plugins/fields/edit-searcher/search-basictext.vm"/>
+    <resource type="velocity" name="view" location="templates/plugins/fields/view-searcher/view-searcher-basictext.vm"/>
+    <valid-customfield-type package="com.go2group.jira.plugin.customfield" key="regex-based-custom-field"/>
+  </customfield-searcher>
+  <webwork1 key="regex-action" name="Regex Custom Field Actions">
+    <actions>
+      <action name="com.go2group.jira.plugin.web.action.ConfigureRegexCustomField" alias="configureRegexCustomField">
+        <view name="input">/templates/action/config-regex.vm</view>
+        <view name="success">/templates/action/config-view-regex.vm</view>
+      </action>
+    </actions>
+  </webwork1>
+  <component key="regex-custom-field-service" class="com.go2group.jira.plugin.ao.RegexAoServiceImpl" public="true">
+    <interface>com.go2group.jira.plugin.ao.RegexAoService</interface>
+  </component>
+  <!-- Bulk delete projects start -->
+  <webwork1 key="bulk-delete-project-webwork-module" name="Bulk Delete Project Webwork Module" i18n-name-key="bulk-delete-project-webwork-module.name"> 
+    <description key="bulk-delete-project-webwork-module.description">The Bulk Delete Project Webwork Module Plugin</description>
+    <actions>
+      <action name="com.go2group.jira.plugin.web.action.BulkDeleteProjectWebworkModuleAction" alias="BulkDeleteProject" roles-required="admin">
+        <view name="success">/templates/action/bulk-delete-project-webwork-module/success.vm</view>
+        <view name="input">/templates/action/bulk-delete-project-webwork-module/input.vm</view>
+        <view name="error">/templates/action/bulk-delete-project-webwork-module/error.vm</view>
+      </action>
+    </actions>
+  </webwork1>
+  <web-item key="bulk-delete-project-web-item" name="Bulk Delete Projects Web Item" section="admin_plugins_menu/g2g_menu" weight="30"  state="disabled"><!-- JUP-76 -->
+    <label key="Bulk Delete Projects"/>
+    <link linkId="load_bulk_delete_projects_link">/secure/admin/BulkDeleteProject!default.jspa</link>
+  </web-item>
+  <!-- Bulk delete projects end -->
+  <!-- Configurable number format custom field start -->
+  <customfield-type name="Configurable Number Format Custom Field" i18n-name-key="configurable-number-field-custom-field.name" key="configurable-number-field-custom-field" class="com.go2group.jira.plugin.customfield.ConfigurableNumberFieldCustomField">
+    <description key="configurable-number-field-custom-field.description">Allows configuration of number format and validates if custom field value matches format</description>
+    <resource name="view" type="velocity" location="/templates/customfield/view-configurable-number-format-custom-field.vm"/>
+    <resource name="edit" type="velocity" location="/templates/plugins/fields/edit/edit-number.vm"/>
+  </customfield-type>
+  <customfield-searcher key="configurable-number-field-exactnumber" name="Configurable Number Format Number Searcher" i18n-name-key="admin.customfield.searcher.exactnumber.name" class="com.atlassian.jira.issue.customfields.searchers.ExactNumberSearcher">
+    <description key="admin.customfield.searcher.exactnumber.desc">Allow searching for a number which exactly matches.</description>
+    <resource type="velocity" name="search" location="templates/plugins/fields/edit-searcher/search-basictext.vm"/>
+    <resource type="velocity" name="view" location="templates/plugins/fields/view-searcher/view-searcher-basictext.vm"/>
+    <valid-customfield-type package="com.go2group.jira.plugin.customfield" key="configurable-number-field-custom-field"/>
+  </customfield-searcher>
+  <customfield-searcher key="configurable-number-field-numberrange" name="Configurable Number Format Number Range searcher" i18n-name-key="admin.customfield.searcher.numberrange.name" class="com.atlassian.jira.issue.customfields.searchers.NumberRangeSearcher">
+    <description key="admin.customfield.searcher.numberrange.desc">Allow searching for a number that is in a given range</description>
+    <resource type="velocity" name="search" location="templates/plugins/fields/edit-searcher/search-number-range.vm"/>
+    <resource type="velocity" name="view" location="templates/plugins/fields/view-searcher/view-searcher-number-range.vm"/>
+    <valid-customfield-type package="com.go2group.jira.plugin.customfield" key="configurable-number-field-custom-field"/>
+  </customfield-searcher>
+  <webwork1 key="configurable-number-format-action" name="Configurable Number Format Custom Field Actions">
+    <actions>
+      <action name="com.go2group.jira.plugin.web.action.ConfigureNumberFormatCustomField" alias="configureNumberFormatCustomField">
+        <view name="input">/templates/action/configure-number-format/config-number-format-edit.vm</view>
+        <view name="success">/templates/action/configure-number-format/config-number-format-view.vm</view>
+      </action>
+    </actions>
+  </webwork1>
+  <component key="configure-number-format-custom-field-service" class="com.go2group.jira.plugin.ao.NumberFormatAoServiceImpl" public="true">
+    <interface>com.go2group.jira.plugin.ao.NumberFormatAoService</interface>
+  </component>
+  <!-- Configurable number format custom field end -->
+  <!-- Assign to roles across projects start -->
+  <webwork1 key="assign-project-roles-action" name="Assign Project Roles Action">
+    <actions>
+      <action name="com.go2group.jira.plugin.web.action.AssignProjectRoles" alias="AssignProjectRoles" roles-required="admin">
+        <view name="input">/templates/action/assign-project-roles/assign-project-roles-edit.vm</view>
+        <view name="error">/templates/action/assign-project-roles/assign-project-roles-error.vm</view>
+        <view name="success">/templates/action/assign-project-roles/assign-project-roles-view.vm</view>
+      </action>
+    </actions>
+  </webwork1>
+  <web-item key="assign-project-roles-web-item" name="Assign Project Roles Web Item" section="admin_plugins_menu/g2g_menu" weight="40">
+    <label key="Assign Project Roles"/>
+    <link linkId="assign_project_roles_link">/secure/admin/AssignProjectRoles!default.jspa</link>
+  </web-item>
+  <!-- Assign to roles across projects end -->
+  <!-- Last updated by calculated field start -->
+  <customfield-type name="Last Udpated By Custom Field" i18n-name-key="last-updated-by-custom-field.name" key="last-updated-by-custom-field" class="com.go2group.jira.plugin.customfield.LastUpdatedByCustomField">
+    <description key="last-updated-by-custom-field.description">Calculated field to display issue last updated by username</description>
+    <resource name="view" type="velocity" location="/templates/customfield/last-updated-by-custom-field.vm"/>
+    <!--<resource name="edit" type="velocity" location="/templates/plugins/fields/edit/edit-number.vm"/>-->
+  </customfield-type>
+  <customfield-searcher key="last-updated-by-custom-field-searcher" name="Last Updated By Custom Field Searcher" i18n-name-key="last-updated-by-custom-field-searcher.name" class="com.go2group.jira.plugin.customfield.searcher.UserPickerSearcher">
+    <description key="last-updated-by-custom-field-searcher.description">Search last updated by custom field.</description>
+    <resource type="velocity" name="search" location="templates/plugins/fields/edit-searcher/search-userpicker.vm"/>
+    <resource type="velocity" name="label" location="templates/plugins/fields/view-searcher/label-searcher-user.vm"/>
+    <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="last-updated-by-custom-field"/>
+  </customfield-searcher>
+  <!-- Last updated by calculated field end -->
+  <!-- Set due date based on issue priority start -->
+  <component key="due-date-based-on-priority-listener" class="com.go2group.jira.plugin.listener.DueDateBasedOnPriority">
+    <description>Class that processes the incoming JIRA issue events.</description>
+  </component>
+  <component key="priority-due-date-ao-service" class="com.go2group.jira.plugin.ao.PriorityDueDateServiceImpl" public="true">
+    <interface>com.go2group.jira.plugin.ao.PriorityDueDateService</interface>
+  </component>
+  <webwork1 key="priority-due-date-action" name="Set Due Date Based on Issue Priority Action">
+    <actions>
+      <action name="com.go2group.jira.plugin.web.action.DueDateBasedOnPriorityAction" alias="PriorityDueDate" roles-required="admin">
+        <view name="input">/templates/action/priority-due-date-action/priority-due-date-action-edit.vm</view>
+        <view name="error">/templates/action/priority-due-date-action/priority-due-date-action-error.vm</view>
+        <view name="success">/templates/action/priority-due-date-action/priority-due-date-action-view.vm</view>
+      </action>
+    </actions>
+  </webwork1>
+  <web-item key="priority-due-date-web-item" name="Set Due Date Based on Issue Priority Web Item" section="admin_plugins_menu/g2g_menu" weight="50">
+    <label key="priority-due-date-web-item.name"/>
+    <link linkId="priority_due_date_link">/secure/admin/PriorityDueDate!default.jspa</link>
+  </web-item>
+  <!-- Set due date based on issue priority end -->
+  <!-- Project level attachments start -->
+
+  <project-tabpanel key="project-level-attachments-tab-panel" name="Project Level Attachments Tab Panel" i18n-name-key="project-level-attachments-tab-panel.name" class="com.go2group.jira.plugin.panels.ProjectLevelAttachmentsTabPanel" state="disabled"> <!-- JUP-76 -->
+    <description key="project-level-attachments-tab-panel.description">The Project Level Attachments Tab Panel Plugin</description>
+    <label key="project-level-attachments-tab-panel.label"></label>
+    <order>10</order>
+    <resource type="velocity" name="view" location="templates/tabpanels/project-level-attachments-tab-panel.vm"/>
+  </project-tabpanel>
+    <component key="project-level-attachments-ao-service" class="com.go2group.jira.plugin.ao.service.impl.ProjectLevelAttachmentServiceImpl" public="true">
+        <interface>com.go2group.jira.plugin.ao.service.ProjectLevelAttachmentService</interface>
+    </component>
+    <servlet name="Upload Project Attachments Servlet" i18n-name-key="upload-project-attachments-servlet.name" key="upload-project-attachments-servlet" class="com.go2group.jira.plugin.servlet.project.attachment.UploadProjectAttachment">
+        <description key="upload-project-attachments-servlet.description">Upload project level attachments</description>
+        <url-pattern>/uploadProjectAttachments</url-pattern>
+    </servlet>
+    <servlet name="Download Project Attachments Servlet" i18n-name-key="download-project-attachments-servlet.name" key="download-project-attachments-servlet" class="com.go2group.jira.plugin.servlet.project.attachment.DownloadProjectAttachment">
+        <description key="download-project-attachments-servlet.description">Download project level attachments</description>
+        <url-pattern>/downloadProjectAttachment</url-pattern>
+    </servlet>
+    <servlet name="Delete Project Attachments Servlet" i18n-name-key="delete-project-attachments-servlet.name" key="delete-project-attachments-servlet" class="com.go2group.jira.plugin.servlet.project.attachment.DeleteProjectAttachment">
+        <description key="delete-project-attachments-servlet.description">Delete project level attachments</description>
+        <url-pattern>/deleteProjectAttachments</url-pattern>
+    </servlet>
+    <!-- Project level attachments end-->
+
+    <!-- Approvals custom field start -->
+    <customfield-type key="g2g-approvals-custom-field" name="Approvals Custom Field" class="com.go2group.jira.plugin.customfield.ApprovalsCustomField">
+        <description>A summary of Approvals</description>
+        <resource type="velocity" name="view" location="templates/customfield/approvals-custom-field/view-approvals.vm"/>
+        <resource type="velocity" name="column-view" location="templates/customfield/approvals-custom-field/column-view-approvals.vm"/>
+    </customfield-type>
+
+    <webwork1 key="g2g-approvals-config-action" name="Approvals Custom Field Config Action" class="java.lang.Object">
+        <actions>
+            <action name="com.go2group.jira.plugin.customfield.config.ApprovalsConfigureAction" alias="ApprovalsConfigureAction">
+                <view name="success">templates/customfield/approvals-custom-field/config-approvals.vm</view>
+            </action>
+        </actions>
+    </webwork1>
+    <!-- Approvals custom field end-->
+    <!-- Component to return display name given a JIRA system field name starts -->
+    <component key="jira-system-field-name-service" name="Jira System Field Name Service"
+               class="com.go2group.jira.plugin.util.impl.JiraSystemFieldNameImpl">
+        <interface>com.go2group.jira.plugin.util.JiraSystemFieldName</interface>
+    </component>
+    <!-- -->
+</atlassian-plugin>

@@ -1,0 +1,80 @@
+<html>
+<head>
+    <meta name="decorator" content="atl.admin">
+    <title>$i18n.getText('assign-project-roles.heading')</title>
+</head>
+<body>
+
+<h1>$i18n.getText('assign-project-roles.heading')</h1>
+
+#if($projects && $projects.size() > 0)
+
+#if ($hasErrorMessages)
+<div class="aui-message error">
+    <p class="title">
+        <span class="aui-icon icon-error"></span>
+        <strong>$i18n.getText("g2g.plugin.common.error")</strong>
+    </p>
+    <ul>
+        #foreach( $message in $errorMessages )
+        <li>$message</li>
+        #end
+    </ul>
+</div>
+#end
+
+<form name="assign-project-roles-form" action="AssignProjectRoles!execute.jspa" class="aui">
+    <fieldset>
+    <table class="aui">
+        <tbody>
+            <tr>
+                <td>
+                    <div class="field-group">
+                        <label for="selectedProjects">$i18n.getText('assign-project-roles-project.label')</label>
+                        <select name="selectedProjects" id="selectedProjects" multiple="multiple" class="multi-select">
+                            #foreach($project in $projects)
+                                <option value="$project.getKey()">$project.getName() ($project.getKey())</option>
+                            #end
+                        </select>
+                        <div class="description">$i18n.getText('assign-project-roles-project.description')</div>
+                    </div>
+                </td>
+                <td>
+                    <div class="field-group">
+                        <label for="selectedRoles">$i18n.getText('assign-project-roles-roles.label')</label>
+                            <select name="selectedRoles" id="selectedRoles" multiple="multiple" class="multi-select">
+                                #foreach($role in $roles)
+                                    <option value="$role.getId()">$role.getName()</option>
+                                #end
+                            </select>
+                            <div class="description">$i18n.getText('assign-project-roles-roles.description')</div>
+                    </div>
+                </td>
+                <td>
+                    <div class="field-group">
+                        <label for="usernames">$i18n.getText('assign-project-roles-username.label')</label>
+                        <textarea id="usernames" name="usernames" class="textarea"></textarea>
+                        <div class="description">$i18n.getText('assign-project-roles-username.description')</div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+        </fieldset>
+        <div class="buttons-container">
+            <div class="buttons">
+                <input class="button submit" type="submit" value="$i18n.getText('g2g.plugin.common.submit')" id="comment-save-button">
+                <a class="cancel" href="$baseurl/plugins/servlet/upm/marketplace">$i18n.getText('g2g.plugin.common.cancel')</a>
+            </div>
+        </div>
+    </form>
+#else
+    <div class="aui-message warning">
+        <p class="title">
+            <strong>$i18n.getText("")No projects found</strong>
+        </p>
+        <p>$i18n.getText("")No projects found in your JIRA instance.</p>
+    </div>
+#end
+</body>
+</html>

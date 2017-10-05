@@ -1,0 +1,1 @@
+Progresses the workflow using transition: <b>$!transitionField</b> when <b>#if ($cfName) $cfName #else $!customField #end = $!cfValue</b>.

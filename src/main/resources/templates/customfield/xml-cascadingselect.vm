@@ -1,0 +1,17 @@
+XML
+##disable_html_escaping() TODO REENABLE
+#if ($canview.booleanValue())
+	#if ($value)
+		#set ($keys = $value.keySet())
+	#end
+	#if ($keys)
+		#foreach ($key in $keys)
+			#set ($singlevalue = $value.get($key))
+			#if ($singlevalue)
+				<customfieldvalue key="$!key">$singlevalue.optionId</customfieldvalue>
+			#end
+		#end
+	#end
+#else
+	<customfieldvalue>Access Restricted</customfieldvalue>
+#end

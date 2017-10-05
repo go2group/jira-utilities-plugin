@@ -1,0 +1,29 @@
+<tr bgcolor=ffffff>
+	<td bgcolor="ffffff" nowrap style="text-align:right;">
+		<span class="label">$i18n.getText('field.membership.validator.user.field')</span>
+	</td>
+    <td bgcolor="ffffff" nowrap>
+		<select class="select" id="userfield" name="userfield">
+			#foreach($field in $userjirafield.keySet())
+			<option value="$field" #if ($field == $selecteduserfield) selected="selected" #end>$userjirafield.get($field)</option>
+			#end
+			
+			#foreach($field in $usercustomfield)
+			<option value="$field.id" #if ($field.id == $selecteduserfield) selected="selected" #end>$field.name</option>
+			#end
+		</select>
+    </td>
+</tr>
+<tr bgcolor=ffffff>
+	<td bgcolor="ffffff" nowrap style="text-align:right;">
+		<span class="label">$i18n.getText('field.membership.validator.group.field')</span>
+	</td>
+    <td bgcolor="ffffff" nowrap colspan="2">
+		
+		<select class="select" id="group" name="group">
+			#foreach($g in $groups)
+			<option value="$g.name" #if ($g.name == $selectedgroup) selected="selected" #end>$g.name</option>
+			#end
+		</select>
+    </td>
+</tr>

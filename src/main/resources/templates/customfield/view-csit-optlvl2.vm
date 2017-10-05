@@ -1,0 +1,103 @@
+<script>
+	function fnValidate(){
+		var st = document.getElementById('optLvl2');
+		
+		if (st.value.trim().length == 0){
+			alert("Option cannot be blank");
+			return false;
+		}else{
+			f.submit();
+			return true;
+		}
+	}
+</script>
+
+<div>
+	<table class="jiraform  maxWidth">
+		<tbody>
+			<tr>
+				<td class="jiraformheader">
+					<h3 class="formtitle">View Options Level 2</h3>
+				</td>
+			</tr>
+			<tr>
+				<td class="jiraformbody">
+					<p>Configure the level 2 options for parent option <b>$optLvl1</b> here</p>
+					<p><a href="$req.getContextPath()/secure/admin/ConfigureCSIT!viewOptLvl1.jspa?issuetype=$issuetype&customFieldId=$customFieldId"><b>Configure Options Level 1</b></a></p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<br>
+	<table align="center" bgcolor="#bbbbbb" border="0" cellpadding="0" cellspacing="0" width="60%" style="align:left;">
+		<tbody>
+			<tr><td>
+				<table border="0" cellpadding="3" cellspacing="1" width="100%">
+					<thead>
+						<tr bgcolor="#F0F0F0">
+							<th class="colHeaderLink"><b>Options</b></th>
+							<th class="colHeaderLink"><b>Actions</b></th>
+						</tr>
+					</thead>
+					
+					<tbody>
+						#if ($optionsLevel2.size() > 0)
+							#set ($counter = 0)
+							#foreach ($option in $optionsLevel2)
+							#set ($counter = $counter + 1)		
+							<tr #if($counter % 2 == 0) bgcolor="#fffff0" #else bgcolor="#ffffff" #end>
+								<td>$option</td>
+								<td width="1%" nowrap>
+									<a href="$req.getContextPath()/secure/admin/ConfigureSubtype!deleteoptLvl2.jspa?optLvl1=$optLvl1&optLvl2=$option&issuetype=$issuetype">Delete</a>
+								</td>
+							</tr>
+							#end
+						#else
+							<tr bgcolor="#fffff0"><td colspan=4>There are no level 2 options configured at the moment</td></tr>
+						#end
+					</tbody>
+				</table>
+			</td></tr>
+		</tbody>
+	</table>
+</div>
+<br>
+<div>
+	<form id="add-checklist-issue" action="$req.getContextPath()/secure/admin/ConfigureCSIT!addOptLvl2.jspa">
+		<table class="jiraform maxWidth">
+			<tbody>
+				<tr class="titlerow">
+					<td colspan="2" class="jiraformheader">
+						<h3 class="formtitle">Add</h3>
+					</td>
+				</tr>
+				<tr class="descriptionrow">
+					<td colspan="2" class="jiraformheader">
+					<div class="desc-wrap">Add New Level 2 Option</div>
+					#if ($errorMessages)
+						#foreach ($msg in $errorMessages)
+							<div style="color:red;font-weight:bold">$msg</div>
+						#end
+					#end
+					</td>
+				</tr>
+				<tr class="hidden"><td colspan="2"></td></tr>
+				<tr>
+					<td class="fieldLabelArea">Option Level 2:</td>
+					<td bgcolor="#ffffff" class="fieldValueArea">
+						<input type="text" id="optLvl2" name="optLvl2" style="width:30%">
+					</td>
+				</tr>
+				<tr>
+					<td class="jiraformfooter">&nbsp;</td>
+					<td colspan="1">
+						<input type="submit" name="Add" value="  Add  " id="add_submit" accesskey="s" title="Press Alt+s to submit form" class="spaced " onClick="fnValidate(this); return false;">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<input type="hidden" name="customFieldId" value="$customFieldId"/>		
+		<input type="hidden" name="issuetype" value="$issuetype"/>
+		<input type="hidden" name="optLvl1" value="$optLvl1"/>
+	</form>
+</div>

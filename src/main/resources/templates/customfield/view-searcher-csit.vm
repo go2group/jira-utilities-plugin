@@ -1,0 +1,12 @@
+#set( $text_invalid_sel = "" )
+
+#if($action.hasAnyErrors())
+    #set( $text_invalid_sel = "invalid_sel" )
+#end
+
+#searcherHeaderNoField ($customField.id $customField.name $text_invalid_sel)
+#if ($value)
+##$textutils.htmlEncode($value)
+$textutils.htmlEncode($!option1value) - $textutils.htmlEncode($!option2value)
+#end
+#searcherFooter ($customField)

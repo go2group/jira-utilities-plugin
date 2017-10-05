@@ -1,0 +1,51 @@
+#set($initializeFlag = $allowInitialize)
+<div class="aui-message info">
+<span class="aui-icon icon-info"></span>
+<p>The unique sequence key cannot be edited after its creation</p>
+#if ($initializeFlag)
+<p>Initialize action will set the Unique Sequence Key to all the issues that doesn't have this field value set.  The applicable issues are determined based on the selected context for this customfield</p>
+#else
+<p>Make sure there is no re-index banner appearing in the page.  If the banner is present, perform re-indexing if you are expecting Intialize option</p>
+#end
+</div>
+#if ($initializeFlag)
+<div class="aui-message warning">
+<span class="aui-icon icon-warning"></span>
+<p>Make sure there is no re-index banner appearing in the page.  If the banner is present, perform re-indexing before running Intialize</p>
+<p>The initialize operation may run longer depending on the number of issues involved</p>
+</div>
+#end
+#if($initialized)
+<div class="aui-message success">
+<span class="aui-icon icon-success"></span>
+<p>Unique Sequence Key successfully initialized on the applicable issues</p>
+</div>
+#end
+
+<tr>
+	<td>
+		<table style="width='100%';padding:15px;">
+			<tr>
+				<td>
+					<span><b>$i18n.getText('unique.sequence.key.label') : </b></span>
+				</td>
+				<td>
+					<span>$configKey</span>
+				</td>
+			</tr>
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<td colspan="2">
+					#if ($initializeFlag)
+					<a class="aui-button" href="configureUSK!initialize.jspa?customFieldId=$customFieldId&fieldConfigId=$fieldConfigId&fieldConfigSchemeId=$fieldConfigSchemeId&returnUrl=$returnUrl&configKey=$configKey">Initialize</a>
+					#end
+					<a class="aui-button" href="$returnUrl">$i18n.getText('g2g.plugin.common.back')</a>
+				</td>
+			</tr>
+		</table>
+		<input type="hidden" name="returnUrl" value="$returnUrl"/>
+		<input type="hidden" name="customFieldId" value="$customFieldId"/>
+		<input type="hidden" name="fieldConfigId" value="$fieldConfigId"/>
+		<input type="hidden" name="fieldConfigSchemeId" value="$fieldConfigSchemeId"/>
+	</td>
+</tr>

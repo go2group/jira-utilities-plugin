@@ -1,0 +1,26 @@
+#controlHeader ($action $customField.id $customField.name $fieldLayoutItem.required $displayParameters.noHeader)
+    <fieldset rel="$customField.id" class="hidden user-picker-params">
+        <input type="hidden" id="formName" value="jiraform">
+        <input type="hidden" id="fieldName" value="$customField.id">
+        <input type="hidden" id="multiSelect" value="true">
+        #if ($canPerformAjaxSearch)<input type="hidden" id="userPickerEnabled" value="true">#end
+    </fieldset>
+    #set ($userString = "")
+    #if ($value)
+        #foreach ($selectedValue in $value)
+            #if ($userString == "")
+                #set ($userString=$selectedValue)
+            #else
+                #set ($userString="${userString}, $selectedValue")
+            #end
+        #end
+    #end
+    <div class="ajax_autocomplete" id="${customField.id}_container"><textarea id="$customField.id" name="$customField.id" cols="40" rows="3" style="width: 30%;">$userString</textarea>
+    #if ($action.isHasPermission("pickusers"))
+        <a class="popup-trigger" href="#"><img title="$i18n.getText('user.picker.select.users')" name="multiuserImage" src="${req.getContextPath()}/images/icons/filter_public.gif" hspace="0" height="16" width="16" border="0" align="top" /></a>
+    #else
+        <img title="$i18n.getText('user.picker.no.permission')" src="$req.contextPath/images/icons/userpicker_disabled.gif" hspace="0" height="16" width="16" border="0" align="top" />
+    #end<br/>#if ($canPerformAjaxSearch)<div id="${customField.id}_results" class="ajax_results"></div><font size="1">${i18n.getText('user.picker.ajax.desc')}</font>#end
+    </div>
+#controlFooter ($action $fieldLayoutItem.fieldDescription $displayParameters.noHeader)
+	

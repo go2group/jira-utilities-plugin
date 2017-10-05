@@ -1,0 +1,22 @@
+
+
+#customControlHeader ($action $customField.id $customField.name $fieldLayoutItem.required $displayParameters $auiparams)
+##disable_html_escaping() TODO REENABLE
+
+    #if ($canview.booleanValue())
+        #if (!$fieldLayoutItem || $fieldLayoutItem.required == false)
+            <div class="radio">
+                <input checked="checked" class="radio" id="cf-${customField.id}" name="${customField.id}" type="radio" value="-1">
+                <label for="cf-${customField.id}">$i18n.getText("common.words.none")</label>
+            </div>
+        #end
+        #foreach ($option in $configs.options)
+            <div class="radio">
+                <input #if($value && $value == $option.optionId)checked="checked"#end class="radio" id="${customField.id}-${velocityCount}" name="${customField.id}" type="radio" value="$option.optionId">
+                <label for="${customField.id}-${velocityCount}">$cfValueEncoder.encodeForHtml($option.value)</label>
+            </div>
+        #end
+	#else
+	    <i><span style="color:#ff0000;position:relative;left:140px">Access Restricted</span></i><input type="hidden" id="$customField.id" name="$customField.id" value="$textutils.htmlEncode($!value)"/>
+	#end
+#customControlFooter ($action $customField.id $fieldLayoutItem.fieldDescription $displayParameters $auiparams)

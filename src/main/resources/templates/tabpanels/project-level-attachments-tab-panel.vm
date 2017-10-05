@@ -1,0 +1,48 @@
+<div class="tabpanel-modules">
+<p>
+    <button class="aui-button aui-button-primary" onclick="window.location='$baseurl/plugins/servlet/uploadProjectAttachments?project=$project.getKey()';">Add attachment</button>
+    <!--<a class="aui-button aui-button-primary" href="$baseurl/plugins/servlet/uploadProjectAttachments?project=$project.getKey()">Add attachment</a>-->
+</p>
+#if($attachments.size() > 0)
+    <h4>Listing all attachments</h4>
+    <table class="aui">
+    <thead>
+        <th>$i18n.getText('project.level.attachments.table.first')</th>
+        <th>$i18n.getText('project.level.attachments.table.second')</th>
+        <th>$i18n.getText('project.level.attachments.table.third')</th>
+        <th>$i18n.getText('project.level.attachments.table.fourth')</th>
+        <th>$i18n.getText('project.level.attachments.table.fifth')</th>
+    </thead>
+    #foreach($attachment in $attachments)
+        <tr>
+            <td><a href="$baseurl/plugins/servlet/downloadProjectAttachment?project=$project.getKey()&attachmentId=$attachment.getID()">$attachment.getFileName()</a></td>
+            <td>#if($attachment.getComments())$attachment.getComments()#end</td>
+            <td>$attachment.getFileSize() bytes</td>
+            <td>
+                By
+                <span class="aui-avatar aui-avatar-small">
+                    <span class="aui-avatar-inner">
+                        <img src="$avatarService.getAvatarAbsoluteURL($loggedInUser, $userManager.getUserByKey($attachment.getUploadedBy()), $Avatar.Size.SMALL)" />
+                    </span>
+                </span>
+                $userManager.getUserByKey($attachment.getUploadedBy()).getDisplayName()
+                <br />
+                on $dateFormatter.format($attachment.getUploadedOn())
+            </td>
+            <td>
+                <a class="icon icon-delete" href="$baseurl/plugins/servlet/deleteProjectAttachments?project=$project.getKey()&attachmentId=$attachment.getID()"></a>
+            </td>
+        </tr>
+    #end
+    </table>
+#else
+    <div class="aui-message warning">
+        <p class="title">
+            <span class="aui-icon icon-warning"></span>
+            <strong>No attachments!</strong>
+        </p>
+        No project attachments found.
+    </div>
+#end
+
+</div>

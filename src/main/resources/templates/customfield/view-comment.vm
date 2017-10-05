@@ -1,0 +1,9 @@
+#disable_html_escaping()
+    #if ($comments)
+	    #foreach($comment in $comments)
+		    <div style="max-width: 1400px; min-width: 200px;">&lt;<b>${comment.authorFullName}</b>&gt; &lt;<b>${comment.created}</b>&gt;
+		    $formattedComments.get(${comment.id}) #if($velocityCount != $comments.size()) <hr> #end </div>
+	    #end
+    #else
+	    None
+    #end

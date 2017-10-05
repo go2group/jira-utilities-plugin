@@ -1,0 +1,23 @@
+#controlHeader ($action $customField.id $customField.name $fieldLayoutItem.required $displayParameters.noHeader)
+
+#set($i = 0)
+#foreach($value in $values)
+    #set($paintRule=$paintRules.get($i))
+
+
+## Contents of templates/net/customware/fields/edit-trafficlight.vm : START
+#if ($paintRule.colour)
+    <span style="background-color:#$!paintRule.colour">
+    &nbsp;&nbsp;&nbsp;
+    </span>
+    &nbsp;$!value.toString()
+#else
+    $!value.toString()
+## Contents of templates/net/customware/fields/edit-trafficlight.vm : END
+
+
+#end
+    #set($i = $i + 1)
+#end
+
+#controlFooter ($action $fieldLayoutItem.fieldDescription $displayParameters.noHeader)

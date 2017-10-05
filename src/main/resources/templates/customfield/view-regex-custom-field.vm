@@ -1,0 +1,10 @@
+<div>$value</div>
+<div>
+    #if($REGEX_CHECK)
+        #if($REGEX_CHECK == "PASS")
+            <div><span class="aui-lozenge aui-lozenge-success">success</span> Regular expression validated</div>
+        #else
+            <div><span class="aui-lozenge aui-lozenge-error">error</span> Does not pass regular expression validation</div>
+        #end
+    #end
+</div>

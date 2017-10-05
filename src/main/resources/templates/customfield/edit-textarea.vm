@@ -1,0 +1,18 @@
+
+#customControlHeader ($action $customField.id $customField.name $fieldLayoutItem.required $displayParameters $auiparams)
+#if ($canview.booleanValue())
+	#if ($!customField.isRenderable() && $rendererDescriptor)
+	    ## setup some additional parameters
+	    $!rendererParams.put("rows", "5")
+	    $!rendererParams.put("cols", "40")
+	    $!rendererParams.put("wrap", "virtual")
+	    ## let the renderer display the edit component
+	    #set($valueWithHtml = $rendererDescriptor.getEditVM($!value, $!issue.key, $!fieldLayoutItem.rendererType, $!customField.id, $!customField.name, $rendererParams, false))
+	    $valueWithHtml
+	#else
+	    <textarea class="textarea long-field" cols="40" id="$customField.id" name="$customField.id" rows="5">$textutils.htmlEncode($!value)</textarea>
+	#end
+#else
+<i><span style="color:#ff0000">Access Restricted</span></i><input type="hidden" id="$customField.id" name="$customField.id" value="$textutils.htmlEncode($!value)"/>
+#end
+#customControlFooter ($action $customField.id $fieldLayoutItem.fieldDescription $displayParameters $auiparams)

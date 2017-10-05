@@ -1,0 +1,28 @@
+#disable_html_escaping()
+<div id="attachmentmodule" class="module toggle-wrap">
+	<div id="attachmentmodule_heading" class="mod-header">
+		<span class="toggle-title"><strong>$subtask.key - $subtask.summary</strong></span>
+	</div>
+	<div class="mod-content">
+		<ol id="file_attachments" class="item-attachments" style="padding:5px;">
+			#foreach ($attachment in $attachments)
+				<li class="attachment-content" style="padding:3px;">
+					<div class="attachment-thumb">
+						<a href="${requestContext.baseUrl}/secure/attachment/$attachment.id/$attachment.filename" draggable="true" data-downloadurl="$attachment.mimetype:$attachment.filename:${requestContext.baseUrl}/secure/attachment/$attachment.id/$attachment.filename">
+								<img src="${requestContext.baseUrl}/images/icons/attach/$action.getFileIcon($attachment.filename,$attachment.mimetype)" height="16" width="16" border="0">
+						</a>
+					 </div>
+					 <dl>
+						<dt class="attachment-title">
+							<a href="${requestContext.baseUrl}/secure/attachment/$attachment.id/$attachment.filename" title="$action.formatDisplayHtml($attachment.created) - $attachment.author" draggable="true" data-downloadurl="$attachment.mimetype:$attachment.filename:${requestContext.baseUrl}/secure/attachment/$attachment.id/$attachment.filename">$attachment.filename
+							</a>
+						</dt>
+						<dd class="attachment-date">$action.formatDisplayHtml($attachment.created)</dd>
+						<dd class="attachment-size">$action.formatSize($attachment.filesize)</dd>
+						<dd class="attachment-author">$attachment.author</dd>
+					</dl>
+				 </li>
+			#end
+        </ol>
+     </div>
+</div>

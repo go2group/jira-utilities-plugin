@@ -1,0 +1,23 @@
+#disable_html_escaping()
+
+<div id="commentmodule" class="module toggle-wrap">
+	<div id="commentmodule_heading" class="mod-header">
+		<span class="toggle-title"><strong>$subtask.key - $subtask.summary</strong></span>
+	</div>
+	<div class="mod-content">
+
+		#foreach ($comment in $comments)
+			<div id="comment-${comment.id}" class="issue-data-block activity-comment twixi-block expanded">
+				<div class="twixi-wrap verbose actionContainer">
+                    <div class="action-head">
+                        <div class="action-details">#actionDetailsBody($action $i18n "verbose")</div>
+                    </div>
+					<div class="action-body flooded">
+						#if($comment.getBody()) $velocityhelper.removeHtmlTags($comment.getBody()) #else $velocityhelper.removeHtmlTags($comment) #end
+					</div>
+				</div>
+			</div>
+		#end
+
+     </div>
+</div>

@@ -1,0 +1,24 @@
+<tr>
+    <td>
+        <table style="width='100%';padding:15px;">
+            <tr>
+                <td>
+                    <span><b>$i18n.getText('configure.regular.expression-label') : </b></span>
+                </td>
+                <td>
+                    <span>$configRegex</span>
+                </td>
+            </tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr>
+                <td colspan="2">
+                    <a class="aui-button" href="$returnUrl">$i18n.getText('g2g.plugin.common.back')</a>
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" name="returnUrl" value="$returnUrl"/>
+        <input type="hidden" name="customFieldId" value="$customFieldId"/>
+        <input type="hidden" name="fieldConfigId" value="$fieldConfigId"/>
+        <input type="hidden" name="fieldConfigSchemeId" value="$fieldConfigSchemeId"/>
+    </td>
+</tr>

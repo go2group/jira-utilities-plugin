@@ -1,0 +1,12 @@
+##disable_html_escaping() TODO REENABLE
+    #if ($canview.booleanValue())
+	    #if ($value)
+		    <div class="shorten" id="${customField.id}-field">
+			    #foreach ($singleValue in $value)
+			        <span>$cfValueEncoder.encodeForHtml($!singleValue.toString())</span>#if ($velocityCount != $value.size()),#end
+			    #end
+		    </div>
+	    #end
+    #else
+	    <i><span style="color:#ff0000">Access Restricted</span></i>
+    #end

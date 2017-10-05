@@ -1,0 +1,12 @@
+<div>
+    #if($formattedValue)
+        $formattedValue
+    #else
+        $value
+    #end
+</div>
+<div>
+    #if($error)
+    <div><span class="aui-lozenge aui-lozenge-error">error</span> $error</div>
+    #end
+</div>

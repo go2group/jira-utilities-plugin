@@ -1,0 +1,64 @@
+<script>
+	function fnValidate(){
+		var summary = document.getElementById('chklist-update-summary');
+		
+		if (summary.value.trim().length == 0){
+			alert("Summary cannot be blank");
+			return false;
+		}else{
+			f.submit();
+			return true;
+		}
+	}
+</script>
+
+<div>
+	<form id="add-checklist-issue" action="$req.getContextPath()/secure/admin/ConfigureIssuetypeChecklist!save.jspa">
+		<table class="jiraform maxWidth">
+			<tbody>
+				<tr class="titlerow">
+					<td colspan="2" class="jiraformheader">
+						<h3 class="formtitle">Edit Checklist</h3>
+					</td>
+				</tr>
+				<tr class="descriptionrow">
+					<td colspan="2" class="jiraformheader">
+					<div class="desc-wrap">Edit checklist</div>
+					<div class="notify info">Edit checklist</div>
+					</td>
+				</tr>
+				<tr class="hidden"><td colspan="2"></td></tr>
+				<tr>
+					<td class="fieldLabelArea">Summary:</td>
+					<td bgcolor="#ffffff" class="fieldValueArea">
+						<input type="text" name="summary" id="chklist-update-summary" style="width:70%" value="$checklistIssue.summary">
+					</td>
+				</tr>
+				<tr>
+					<td class="fieldLabelArea">Description:</td>
+					<td bgcolor="#ffffff" class="fieldValueArea">
+						<textarea name="description" cols="40" rows="5" wrap="virtual" style="width:70%">$checklistIssue.description</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td class="fieldLabelArea">Priority:</td>
+					<td bgcolor="#ffffff" class="fieldValueArea">
+						<select name="priority">
+							#foreach($priority in $priorities)
+								<option #if($priority.id == $checklistIssue.priority) selected #end value="$priority.id">$priority.name</option>
+							#end
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="jiraformfooter">&nbsp;</td>
+					<td colspan="1">
+						<input type="submit" name="Update" value="Update" id="update_submit" accesskey="s" title="Press Alt+s to submit form" class="spaced " onClick="fnValidate(this); return false;">
+					</td>
+				</tr>
+			</tbody>
+		</table>		
+		<input type="hidden" name="issuetype" value="$checklistIssue.issuetype"/>
+		<input type="hidden" name="id" value="$checklistIssue.iD"/>
+	</form>
+</div>

@@ -1,0 +1,15 @@
+<html>
+<head>
+    <meta name="decorator" content="atl.admin">
+    <title>$i18n.getText('assign-project-roles.heading')</title>
+</head>
+<body>
+<div class="aui-message success">
+    <p class="title">
+        <span class="aui-icon icon-success"></span>
+        <strong>$i18n.getText("g2g.plugin.common.success")</strong>
+    </p>
+    <p>$i18n.getText("assign-project-roles.success")</p>
+</div>
+</body>
+</html>

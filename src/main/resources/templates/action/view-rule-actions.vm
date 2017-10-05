@@ -1,0 +1,110 @@
+<script>
+	function fnValidate(){
+		var value = document.getElementById('value');
+		
+		if (value.trim().length == 0){
+			alert("Action Value cannot be blank");
+			return false;
+		}else{
+			document.add-rule.submit();
+			return true;
+		}
+	}
+</script>
+<div>	
+	<table class="jiraform maxWidth">
+		<tbody>
+			<tr>
+				<td class="jiraformheader">
+					<h3 class="formtitle">JQL Rule Actions</h3>
+				</td>
+			</tr>
+			<tr>
+				<td class="jiraformbody">
+					<p>Configure the JQL Rules and its actions</p>
+					<p><a href="JQLRuleConfigAction.jspa">Config Rules</a></p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<br>
+	
+	<table bgcolor="#bbbbbb" border="0" cellpadding="0" cellspacing="0" width="50%" style="align:left;">
+		<tbody>
+			<tr><td>
+				<table border="0" cellpadding="4" cellspacing="1" width="100%">
+					<thead>
+						<tr bgcolor="#F0F0F0">
+							<th class="colHeaderLink" width="10%"><b>S.No.</b></th>
+							<th class="colHeaderLink" width="35%"><b>Field</b></th>
+							<th class="colHeaderLink" width="35%"><b>Value</b></th>
+							<th class="colHeaderLink" width="20%"><b>Actions</b></th>
+						</tr>
+					</thead>
+					<tbody>
+					#set ($counter = 1)
+					#foreach ($ruleAction in $ruleActions)
+					<tr #if($counter % 2 == 0) bgcolor="#fffff0" #else bgcolor="#ffffff" #end>
+						<td width="10%">$counter</td>
+						<td width="35%">$ruleAction.field</td>
+						<td width="35%">$ruleAction.value</td>
+						<td width="20%"><a href="JQLRuleActionConfigAction!editAction.jspa?actionId=$ruleAction.ID&ruleId=$ruleId">Edit</a> | <a href="JQLRuleActionConfigAction!deleteAction.jspa?actionId=$ruleAction.ID&ruleId=$ruleId">Delete</a></td>
+					</tr>
+					#set($counter = $counter + 1)
+					#end
+					</tbody>
+				</table>
+			</td></tr>
+		</tbody>
+	</table>
+</div>
+<br>
+<div>
+	<form id="add-action" name="add-action" action="$req.getContextPath()/secure/admin/JQLRuleActionConfigAction!addAction.jspa">
+		<table class="jiraform maxWidth">
+			<tbody>
+				<tr class="titlerow">
+					<td colspan="2" class="jiraformheader">
+						<h3 class="formtitle">Add Action</h3>
+					</td>
+				</tr>
+				<tr class="descriptionrow">
+					<td colspan="2" class="jiraformheader">
+					<div class="desc-wrap">Add JQL Rule actions</div>
+					#if ($errorMessages)
+						#foreach ($msg in $errorMessages)
+							<div style="color:red;font-weight:bold">$msg</div>
+						#end
+					#end
+					</td>
+				</tr>
+				
+				<tr>
+					<td class="fieldLabelArea">Field :</td>
+					<td bgcolor="#ffffff" class="fieldValueArea">
+						<select name="field" id="field">
+						#foreach ($field in $fields)
+						<option value="$field.id" >$field.name</option>
+						#end
+						</select>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="fieldLabelArea">Value :</td>
+					<td bgcolor="#ffffff" class="fieldValueArea">
+						<input type="text" id="value" name="value">
+					</td>
+				</tr>
+				<tr>
+					<td class="jiraformfooter">&nbsp;</td>
+					<td colspan="1">
+						<input type="submit" class="aui-button" name="Add" value="Add" id="add_submit" accesskey="s" title="Press Alt+s to submit form" class="spaced " onClick="fnValidate(this); return false;">
+					</td>
+				</tr>
+				
+			</tbody>
+		</table>		
+		<input type="hidden" name="ruleId" value="$ruleId"/>
+	</form>
+</div>

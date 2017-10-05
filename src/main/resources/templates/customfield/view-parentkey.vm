@@ -1,0 +1,5 @@
+    #if($parentIssueKey)
+        <p>
+            <a href="${requestContext.baseUrl}/browse/$parentIssueKey" style="color:#326ca6;" title="$textutils.htmlEncode($parentIssueKey)">$textutils.htmlEncode($parentIssueKey)</a>
+        </p>
+    #end

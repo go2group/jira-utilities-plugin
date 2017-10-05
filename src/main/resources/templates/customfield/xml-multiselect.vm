@@ -1,0 +1,10 @@
+##disable_html_escaping() TODO REENABLE
+#if ($canview.booleanValue())
+	#if ($value)
+		#foreach ($singleValue in $value)
+	<customfieldvalue key="$singleValue.optionId"><![CDATA[$xmlutils.escapeForCdata($!singleValue.toString())]]></customfieldvalue>
+		#end
+	#end
+#else
+	<customfieldvalue>Access Restricted</customfieldvalue>
+#end

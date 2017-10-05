@@ -1,0 +1,50 @@
+<html>
+	<head>	
+		<title>Custom Field Creator</title>
+		<meta name="decorator" content="admin" />
+	</head>
+	
+	<body>
+		<form name="submit-data" action="$req.getContextPath()/secure/CFCreator!create.jspa" method="post" class="aui">
+			<table class="aui aui-table-rowhover">
+				<tr class="titlerow">
+					<th><input type="checkbox" id="select-all" name="select-all"/></th>
+					<th>Custom Field Name</th>
+					<th>Custom FIeld Type<th>
+				</tr>
+				#foreach($rep in $reps)
+					<tr>
+						<td><input type="checkbox" id="checkboxGroup" name="checkboxGroup" value="${rep.name},${rep.type}"/></td>
+						<td>$rep.name</td>
+						<td>$rep.type</td>
+					</tr>
+				#end
+			</table>
+			
+			<div class="buttons-container form-footer">
+				<div class="buttons">
+					<input accesskey="s" class="button" id="submit" name="Add" title="Press Alt+s to submit this form" type="submit" value="Create Custom Field">
+					<a accesskey="`" class="cancel" href="CFCreator.jspa" id="cancel" title="Press Alt+` to cancel">Cancel</a>
+				</div>
+			</div>
+		</form>
+		
+		<script type="text/javascript">
+			AJS.$(document).ready(function() {
+				AJS.$('#select-all').change(function() {
+					var checked = AJS.$(this).is(':checked');
+					console.log(checked);
+					if (checked) {
+						AJS.$('td > input[type="checkbox"]').each(function() {
+							AJS.$(this).prop('checked', true);
+						});
+					} else {
+						AJS.$('td > input[type="checkbox"]').each(function() {
+							AJS.$(this).prop('checked', false);
+						});
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

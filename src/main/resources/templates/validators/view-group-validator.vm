@@ -1,0 +1,3 @@
+#if ($group)
+	User ($selecteduserfield) in group '$group' will be checked to make sure field '$jiraSystemFieldName.getSystemFieldName($field)' is not empty.
+#end

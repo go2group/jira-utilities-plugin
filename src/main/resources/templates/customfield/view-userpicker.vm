@@ -1,0 +1,13 @@
+##disable_html_escaping() TODO REENABLE
+#if ($canview.booleanValue())
+	#if ($value)
+	    #if ($displayParameters && $displayParameters.nolink)
+        	$textutils.htmlEncode($value.displayName)
+	    #else
+	    	#set($nameWithHtml = $userformat.formatUser($value.name, 'fullNameHover', "user_cf"))
+	    	<span class="tinylink">$nameWithHtml</span>
+	    #end
+	#end
+#else
+	<i><span style="color:#ff0000">Access Restricted</span></i>
+#end

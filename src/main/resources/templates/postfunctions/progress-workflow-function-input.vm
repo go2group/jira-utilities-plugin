@@ -1,0 +1,21 @@
+<tr>
+    <td class="fieldLabelArea">
+        Transition ID:
+    </td>
+    <td nowrap>
+        <input name="transitionField" id="transitionField" value="$!transitionField" />
+    </td>
+</tr>
+<tr>
+    <td class="fieldLabelArea">
+        Condition:
+    </td>
+    <td nowrap>
+        <select name="customField" id="customField"/>
+        	#foreach($cf in $cFields)
+        		<option value="$cf.id" #if($customField && $cf.getId().equals($customField)) selected #end>$cf.name</option>
+        	#end
+        </select> = 
+        <input name="cfValue" id="cfValue" value="$!cfValue" />
+    </td>
+</tr>

@@ -1,0 +1,3 @@
+Validates if the <strong>$selecteduserfield</strong> value is member of group <strong>$selectedgroup</strong>
+Hello
+$i18n.getText('field.membership.validator.view','$selecteduserfield','selectedgroup')

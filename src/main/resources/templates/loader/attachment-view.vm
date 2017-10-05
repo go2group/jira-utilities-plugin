@@ -1,0 +1,66 @@
+<html>
+<head>
+    <meta name="decorator" content="atl.admin">
+    <title>$i18n.getText('load.attachments.heading')</title>
+</head>
+<body>
+<div class="content-body aui-panel">
+	<form id="attachment-loader" class="aui" action="$req.getContextPath()/secure/admin/AttachmentLoadAction.jspa">
+		<div class="form-body">
+			<h2>$i18n.getText('load.attachments.heading')</h2>
+			<div class="aui-message info"><span class="aui-icon icon-info"></span>
+				<p>$i18n.getText('load.attachments.description')</p>
+				<p>
+				<span style="font-size:11px;"><i>
+				<strong>Issue Key,Attachment 1,Attachment 2</strong><br/>
+				TST-121,07/14/1950 12:00:00;mnatar;loadme.zip,07/14/1950 12:00:00;mnatar;myissues.txt<br/>
+				TST-122,12/14/1980 12:00:00;mnatar;sample.jpg,
+				</i></span>
+				</p>
+				<p><strong>$i18n.getText('load.attachments.description.warning')</strong></p>
+			</div>		
+			<div class="aui-message warning"><span class="aui-icon icon-warning"></span>
+				<p><strong>$i18n.getText('load.attachments.description.recommend')</strong></p>
+			</div>		
+
+			#if ($errorMessages)
+				#if ($errorMessages.size() > 0)
+					<div class="aui-message error"><span class="aui-icon icon-error"></span>
+						#foreach ($msg in $errorMessages)
+							<p>$msg</p>
+						#end
+					</div>
+				#end
+			#end
+			
+			#if ($message)
+				<div class="aui-message info"><span class="aui-icon icon-info"></span>
+					<p>$message</p>
+				</div>
+			#end
+			
+			<fieldset>
+				<div class="field-group">
+					<label>$i18n.getText('load.attachments.filename.label')<span class="aui-icon icon-required"> required</span></label>
+					<input type="text" name="loadFileName" id="loadFileName" size="40" value="$!loadFileName"/>
+					<div class="description">$i18n.getText('load.attachments.filename.description')<span id="default-import-path">$jiraImportDirectory</span>
+					</div>
+				</div>
+				<div class="field-group">
+					<label>$i18n.getText('load.attachments.dateformat.label')<span class="aui-icon icon-required"> required</span></label>
+					<input type="text" name="dateFormat" id="dateFormat" size="30" value="$!dateFormat"/>
+					<div class="description">$i18n.getText('load.attachments.dateformat.description') <a href="http://java.sun.com/j2se/1.3/docs/api/java/text/SimpleDateFormat.html" title="Sun Java API" target="_new">SimpleDateFormat</a></div>
+				</div>
+			</fieldset>
+
+			<div class="buttons-container form-footer">
+				<div class="buttons">
+					<input accesskey="s" class="aui-button" id="import" name="import" title="Press Alt+s to submit this form" type="submit" value="$i18n.getText('g2g.plugin.common.submit')">
+					<a accesskey="`" class="aui-button aui-button-link cancel" href="default.jsp" id="import-attachment-cancel" title="Press Alt+` to cancel">$i18n.getText('g2g.plugin.common.cancel')</a>
+				</div>
+			</div>		
+		</div>
+	</form>
+</div>
+</body>
+</html>

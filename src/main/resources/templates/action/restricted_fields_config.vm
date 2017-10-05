@@ -1,0 +1,134 @@
+<html>
+  <head>
+    <title>Restricted Field Configuration</title>
+    <meta name="decorator" content="admin" />
+    <script language="JavaScript">
+		function openUserPickerWindow(element){
+			var vWinUsers = window.open('$!requestContext.canonicalBaseUrl/secure/popups/UserPickerBrowser.jspa?formName=jiraform&multiSelect=false&element=' + element, 'UserPicker', 'status=yes,resizable=yes,top=100,left=200,width=580,height=750,scrollbars=yes');
+			vWinUsers.opener = self;
+			vWinUsers.focus();    
+		}
+		function openGroupPickerWindow(element){
+			var vWinUsers = window.open('$!requestContext.canonicalBaseUrl/secure/popups/GroupPickerBrowser.jspa?formName=jiraform&multiSelect=false&element=' + element, 'GroupPicker', 'status=yes,resizable=yes,top=100,left=200,width=580,height=750,scrollbars=yes');
+			vWinUsers.opener = self;
+			vWinUsers.focus();    
+		}
+	</script>
+  </head>
+	
+  <body>
+  	#if ($hasErrorMessages)
+	   	<div class="aui-message error">
+	       	<h4>Errors</h4>
+	        <ul>
+	        	#foreach( $message in $errorMessages )
+	        		<li>$message</li>
+	        	#end
+	        </ul>
+	    </div>
+	#elseif ($updateSuccesful.equals("Yes"))
+  		<div class="aui-message success shadowed">
+			<p class="title">
+				<span class="aui-icon icon-success"></span>
+			</p>
+			Updates saved succesfully
+		</div>
+  	#end
+    <table class="jiraform maxWidth">
+    <tbody>
+      <tr>
+        <td class="jiraformheader">
+          <h3 class="formtitle">Restricted Field Configuration</h3>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+  <form name="restrictedFieldConfigForm" action="$req.getContextPath()/secure/RestrictedFieldPluginConfig.jspa" enctype="multipart/form-data" method="post">
+            	  <table class="grid" cellpadding="3" cellspacing="1" width=70% align=center> 
+            	  	<thead>
+            	  		<tr>
+            	  			<td bgcolor="f0f0f0" width="30%">Users</td>
+            	  			<td bgcolor="f0f0f0" width="30%">Groups</td>
+            	  		</tr>
+            	  	</thead>
+            	  	<tbody>
+	            		<tr>	            		  
+	            		  <td>
+	                            <table id="usertable" name="usertable">
+	                              <tbody>
+	                                <tr>
+	                                    <th colspan="2">User</th>
+	                                </tr>
+	                                #foreach( $userid in $userlist )
+	                                <tr id="row-$velocityCount">
+	                                    <td><input type="text" name="userid" id="userid-$velocityCount" value="$textutils.htmlEncode($!userid)"/>
+											<a href="javascript:openUserPickerWindow('userid-$velocityCount');"><img title="Select a user" name="multiuserImage" 
+												src="$!requestContext.canonicalBaseUrl/images/icons/filter_public.gif" 
+												hspace="0" height="16" width="16" border="0" align="absmiddle" style="margin-left : 5px;"></a>
+										</td>
+	                                    <td><a href="javascript:void();" onclick="removeRow('row-$velocityCount')">Remove</a></td>
+	                                </tr>
+	                                #end
+	                              </tbody>
+	                            </table>
+	                            <br><a href="javascript:void();" onclick="addRow('usertable')">Add</a>
+	                       </td>
+	                       <td>
+	                            <table id="grouptable" name="grouptable">
+	                              <tbody>
+	                                <tr>
+	                                    <th colspan="2">Group</th>
+	                                </tr>
+	                                 #foreach( $groupid in $grouplist)
+	                                <tr id="group-row-$velocityCount">
+	                                    <td><input type="text" name="groupid" id="groupid-$velocityCount" value="$textutils.htmlEncode($!groupid)"/>
+											<a href="javascript:openGroupPickerWindow('groupid-$velocityCount');"><img title="Select a group" name="multiuserImage" 
+												src="$!requestContext.canonicalBaseUrl/images/icons/filter_public.gif" 
+												hspace="0" height="16" width="16" border="0" align="absmiddle" style="margin-left : 5px;"></a>
+										</td>
+	                                    <td><a href="javascript:void();" onclick="removeRow('group-row-$velocityCount')">Remove</a></td>
+	                                </tr>
+	                                #end
+	                              </tbody>
+	                            </table>
+	                            <br><a href="javascript:void();" onclick="addRowGroup('grouptable')">Add</a>
+	                        </td>
+	            		</tr>						<tr><td colspan="2">&nbsp;</td></tr>						
+                        <tr bgcolor="fffff0">
+                            <td colspan="2" align="center">
+                              <input type="hidden" name="projectkey" id="projectkey" value="$textutils.htmlEncode($projectkey)"/>
+                              <input type="hidden" name="configstep" id="configstep" value="1"/>
+                              <input class="aui-button" type="submit" value="Update"/>
+                            </td>
+                        </tr>
+                    </tbody>
+            	</table>
+      </form>
+</p>
+<script>
+            function removeRow(rowId) {
+                AJS.$('#'+rowId).remove();
+            } // removeRow
+            
+            function addRow(tableid) {
+            	var rowLength = document.getElementById(tableid).rows.length;
+                AJS.$('#'+tableid+' tr:last').after('<tr id="row-'+rowLength+'"><td><input type="text" name="userid" id="userid-'+rowLength+'"/>'+
+										'<a href="javascript:openUserPickerWindow(\'userid-'+rowLength+'\');"> <img title="Select a user" name="multiuserImage"'+
+										'src="$!requestContext.canonicalBaseUrl/images/icons/filter_public.gif"'+
+										'hspace="0" height="16" width="16" border="0" align="absmiddle" style="margin-left : 5px;"></a></td>'+
+										'<td><a href="javascript:void();" onclick="removeRow(\'row-'+rowLength+'\')">Remove</a></td></tr>');
+            } // addRow
+
+            function addRowGroup(tableid) {
+                var rowLength = document.getElementById(tableid).rows.length;
+                AJS.$('#'+tableid+' tr:last').after('<tr id="group-row-'+rowLength+'"><td><input type="text" name="groupid" id="groupid-'+rowLength+'"/>'+
+										'<a href="javascript:openGroupPickerWindow(\'groupid-'+rowLength+'\');"> <img title="Select a group" name="multiuserImage"'+
+										'src="$!requestContext.canonicalBaseUrl/images/icons/filter_public.gif"'+
+										'hspace="0" height="16" width="16" border="0" align="absmiddle" style="margin-left : 5px;"></a></td>'+
+										'<td><a href="javascript:void();" onclick="removeRow(\'group-row-'+rowLength+'\')">Remove</a></td></tr>');
+            } // addRowGroup
+
+        </script>
+</body>
+</html>

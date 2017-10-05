@@ -1,0 +1,12 @@
+<tr>
+    <td class="fieldLabelArea">
+        Events to throw:
+    </td>
+    <td nowrap>
+        <select name="eventsField" id="eventsField" multiple="multiple"/>
+        	#foreach($event in $events)
+        		<option value="$event.id" #if($selectedEvents.contains($event)) selected #end>$event.name</option>
+        	#end
+        </select>
+    </td>
+</tr>

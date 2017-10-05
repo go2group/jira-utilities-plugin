@@ -1,0 +1,35 @@
+Hello
+<tr bgcolor=ffffff>
+    <td align="right" valign="top" bgcolor="fffff0">
+        <span class="label">$i18n.getText('customfield.set.condition.field.label')</span>
+    </td>
+    <td bgcolor="ffffff" nowrap>
+		<select id="customfield" name="customfield">
+	    	#foreach ($val in $customfields)
+	        	<option value="${val.id}"
+	                #if($val.id.equals($selectedCF.id))
+	                    SELECTED
+	                #end
+                >$textutils.htmlEncode(${val.name})</option>
+	        #end
+	        </select>
+        <br><font size="1">Choose the custom field to check</font>
+    </td>
+</tr>
+<tr bgcolor=ffffff>
+    <td align="right" valign="top" bgcolor="fffff0">
+        <span class="label">customfield.set.condition.value.label</span>
+    </td>
+    <td bgcolor="ffffff" nowrap>
+		<select id="checkparam" name="checkparam">
+	    	#foreach ($val in $checkparamvalues)
+	        	<option value="$val"
+	                #if($val.equals($selectedCheckParam))
+	                    SELECTED
+	                #end
+                >$textutils.htmlEncode($val)</option>
+	        #end
+	        </select>
+        <br><font size="1">Choose the option to test</font>
+    </td>
+</tr>

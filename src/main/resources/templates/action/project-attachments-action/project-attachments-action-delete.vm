@@ -1,0 +1,104 @@
+<html>
+<head>
+    <title>$i18n.getText('project.level.attachments.heading')</title>
+    <meta name="decorator" content="atl.general"/>
+</head>
+<body>
+
+    <header class="aui-page-header">
+        <div class="aui-page-header-inner">
+            <div class="aui-page-header-image">
+                <span class="aui-avatar aui-avatar-large aui-avatar-project">
+                    <span class="aui-avatar-inner">
+                        <img src="$avatarService.getProjectAvatarAbsoluteURL($project, $Avatar.Size.SMALL)" />
+                    </span>
+                </span>
+            </div>
+            <div class="aui-page-header-main project-details">
+                <h1>$i18n.getText('project.level.attachments.heading')</h1>
+            </div>
+        </div>
+    </header>
+
+        <div class="aui-page-panel">
+        <div class="aui-page-panel-inner">
+
+        <div class="aui-page-panel-nav">
+            <ul class="vertical tabs">
+                <li><a href="$baseUrl/browse/$project.getKey()" class="browse-tab">$i18n.getText('project.level.attachments.view.project.label')</a></li>
+            </ul>
+        </div>
+
+        <section class="aui-page-panel-content">
+        <header class="aui-page-header">
+            <div class="aui-page-header-inner">
+                <div class="aui-page-header-main">
+                    <h1>$i18n.getText('project.level.attachments.delete.heading')</h1>
+                </div>
+            </div>
+        </header>
+
+        <div class="tabpanel-modules">
+    #if ($hasErrorMessages)
+    <div class="aui-message error">
+        <p class="title">
+            <span class="aui-icon icon-error"></span>
+            <strong>$i18n.getText("g2g.plugin.common.error")</strong>
+        </p>
+        <ul>
+            #foreach( $message in $errorMessages )
+                <li>$message</li>
+            #end
+        </ul>
+    </div>
+    #end
+
+    <div>
+        <p>
+            Are you sure you want to permanently delete this project attachment?
+        </p>
+        <table class="aui">
+        <thead>
+                <th>File</th>
+                <th>Comments</th>
+                <th>File size</th>
+                <th>Uploaded</th>
+            </thead>
+            <tbody>
+        <tr>
+            <td><a href="$baseUrl/plugins/servlet/downloadProjectAttachment?project=$project.getKey()&attachmentId=$attachment.getID()">$attachment.getFileName()</a></td>
+            <td>#if($attachment.getComments())$attachment.getComments()#end</td>
+            <td>$attachment.getFileSize()</td>
+            <td>
+                By
+                <span class="aui-avatar aui-avatar-small">
+                    <span class="aui-avatar-inner">
+                        <img src="$avatarService.getAvatarAbsoluteURL($loggedInUser, $userManager.getUserByKey($attachment.getUploadedBy()), $Avatar.Size.SMALL)" />
+                    </span>
+                </span>
+                $userManager.getUserByKey($attachment.getUploadedBy()).getDisplayName()
+                <br />
+                on $dateFormatter.format($attachment.getUploadedOn())
+            </td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
+
+    <form class="aui" method="POST" action="$baseUrl/plugins/servlet/deleteProjectAttachments?project=$project.getKey()&attachmentId=$attachmentId">
+        <div class="buttons-container">
+            <div class="buttons">
+                <button class="button submit" type="submit">$i18n.getText('g2g.plugin.common.submit')</button>
+                <a class="cancel" href="$baseUrl/browse/$project.getKey()">$i18n.getText('g2g.plugin.common.cancel')</a>
+            </div>
+         </div>
+    </form>
+
+    </div>
+
+    </section>
+
+        </div>
+        </div>
+</body>
+</html>

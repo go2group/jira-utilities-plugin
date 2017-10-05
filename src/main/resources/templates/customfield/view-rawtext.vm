@@ -1,0 +1,9 @@
+##disable_html_escaping() TODO REENABLE
+## Displays unescaped text - use only for 'trusted' content (entered by admins) that can contain HTML tags
+    #if ($canview.booleanValue())
+	    #if ($value)
+		    $cfValueEncoder.encodeForHtml($!value.toString())
+	    #end
+    #else
+	    <i><span style="color:#ff0000">Access Restricted</span></i>
+    #end

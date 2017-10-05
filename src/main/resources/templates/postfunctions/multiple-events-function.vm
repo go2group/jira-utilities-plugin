@@ -1,0 +1,1 @@
+Throw events: #foreach($event in $selectedEvents) <b>$event.name</b>, #end

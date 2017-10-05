@@ -1,0 +1,45 @@
+<html>
+<head>
+    <title>$i18n.getText('unique.sequence.key.heading')</title>
+</head>
+<body>
+<div class="aui-message warning">
+<span class="aui-icon icon-warning"></span>
+<p>$i18n.getText('unique.sequence.key.limitation')</p>
+</div>
+
+<tr>
+	<td>
+		<form class="aui" name="keyconfigform" action="configureUSK!config.jspa">
+                <fieldset>
+                    <div class="field-group">
+                        <label>$i18n.getText('unique.sequence.key.label')</label>
+                        <input onkeyup="showButton(this.value);" class="text" type="text" name="configKey" size="10" value=""/>
+                    </div>
+                </fieldset>
+                <div class="buttons-container">
+                    <div class="buttons">
+                        <input style="display:none;" id="submitButtonDiv" class="button submit" type="submit" name="submit" value="$i18n.getText('g2g.plugin.common.submit')"/>
+                        <a class="cancel" href="$returnUrl">$i18n.getText('g2g.plugin.common.cancel')</a>
+                    </div>
+                </div>
+		<input type="hidden" name="returnUrl" value="$returnUrl"/>
+		<input type="hidden" name="customFieldId" value="$customFieldId"/>
+		<input type="hidden" name="fieldConfigId" value="$fieldConfigId"/>
+		<input type="hidden" name="fieldConfigSchemeId" value="$fieldConfigSchemeId"/>
+		</form>
+	</td>
+</tr>
+
+<script>
+    function showButton(configKey){
+        if(configKey != ""){
+            document.getElementById("submitButtonDiv").style.display = 'block';
+        } else {
+            document.getElementById("submitButtonDiv").style.display = 'none';
+        }
+    }
+</script>
+
+</body>
+</html>
